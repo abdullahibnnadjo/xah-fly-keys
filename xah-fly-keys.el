@@ -115,29 +115,29 @@
 (when (version<= emacs-version "26.0.50"  )
   (defalias 'global-display-line-numbers-mode 'linum-mode ))
 
-(defvar
-  xah-fly-key--current-layout
-  nil
-  "The current keyboard layout. Use `xah-fly-keys-set-layout' to set the layout."
-  )
+;; (defvar
+;;   xah-fly-key--current-layout
+;;   nil
+;;   "The current keyboard layout. Use `xah-fly-keys-set-layout' to set the layout."
+;;   )
 
-(defvar xah-fly-command-mode-activate-hook nil "Hook for `xah-fly-command-mode-activate'")
-(defvar xah-fly-insert-mode-activate-hook nil "Hook for `xah-fly-insert-mode-activate'")
+;; (defvar xah-fly-command-mode-activate-hook nil "Hook for `xah-fly-command-mode-activate'")
+;; (defvar xah-fly-insert-mode-activate-hook nil "Hook for `xah-fly-insert-mode-activate'")
 
-(defvar xah-fly-use-control-key t "if nil, do not bind any control key. When t, standard keys for open, close, paste, are bound.")
+;; (defvar xah-fly-use-control-key t "if nil, do not bind any control key. When t, standard keys for open, close, paste, are bound.")
 
-(defvar xah-fly-use-meta-key t "if nil, do not bind any meta key.")
+;; (defvar xah-fly-use-meta-key t "if nil, do not bind any meta key.")
 
 
 ;; cursor movement
 
-(defun xah-pop-local-mark-ring ()
-  "Move cursor to last mark position of current buffer.
-Call this repeatedly will cycle all positions in `mark-ring'.
-URL `http://ergoemacs.org/emacs/emacs_jump_to_previous_position.html'
-version 2016-04-04"
-  (interactive)
-  (set-mark-command t))
+;; (defun xah-pop-local-mark-ring ()
+;;   "Move cursor to last mark position of current buffer.
+;; Call this repeatedly will cycle all positions in `mark-ring'.
+;; URL `http://ergoemacs.org/emacs/emacs_jump_to_previous_position.html'
+;; version 2016-04-04"
+;;   (interactive)
+;;   (set-mark-command t))
 
 (defun xah-beginning-of-line-or-block ()
   "Move cursor to beginning of line or previous paragraph.
@@ -250,6 +250,8 @@ Version 2016-11-22"
     (cond
      ((eq (char-after) ?\") (forward-sexp))
      ((eq (char-before) ?\") (backward-sexp ))
+     ((eq (char-after) ?\') (forward-sexp))
+     ((eq (char-before) ?\') (backward-sexp ))
      ((looking-at (regexp-opt xah-left-brackets))
       (forward-sexp))
      ((looking-back (regexp-opt xah-right-brackets) (max (- (point) 1) 1))
@@ -450,49 +452,49 @@ Version 2015-06-10"
                (kill-region (region-beginning) (region-end) t)
              (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
-(defun xah-copy-all-or-region ()
-  "Put the whole buffer content to `kill-ring', or text selection if there's one.
-Respects `narrow-to-region'.
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
-Version 2015-08-22"
-  (interactive)
-  (if (use-region-p)
-      (progn
-        (kill-new (buffer-substring (region-beginning) (region-end)))
-        (message "Text selection copied."))
-    (progn
-      (kill-new (buffer-string))
-      (message "Buffer content copied."))))
+;; (defun xah-copy-all-or-region ()
+;;   "Put the whole buffer content to `kill-ring', or text selection if there's one.
+;; Respects `narrow-to-region'.
+;; URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
+;; Version 2015-08-22"
+;;   (interactive)
+;;   (if (use-region-p)
+;;       (progn
+;;         (kill-new (buffer-substring (region-beginning) (region-end)))
+;;         (message "Text selection copied."))
+;;     (progn
+;;       (kill-new (buffer-string))
+;;       (message "Buffer content copied."))))
 
-(defun xah-cut-all-or-region ()
-  "Cut the whole buffer content to `kill-ring', or text selection if there's one.
-Respects `narrow-to-region'.
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
-Version 2015-08-22"
-  (interactive)
-  (if (use-region-p)
-      (progn
-        (kill-new (buffer-substring (region-beginning) (region-end)))
-        (delete-region (region-beginning) (region-end)))
-    (progn
-      (kill-new (buffer-string))
-      (delete-region (point-min) (point-max)))))
+;; (defun xah-cut-all-or-region ()
+;;   "Cut the whole buffer content to `kill-ring', or text selection if there's one.
+;; Respects `narrow-to-region'.
+;; URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
+;; Version 2015-08-22"
+;;   (interactive)
+;;   (if (use-region-p)
+;;       (progn
+;;         (kill-new (buffer-substring (region-beginning) (region-end)))
+;;         (delete-region (region-beginning) (region-end)))
+;;     (progn
+;;       (kill-new (buffer-string))
+;;       (delete-region (point-min) (point-max)))))
 
-(defun xah-copy-all ()
-  "Put the whole buffer content into the `kill-ring'.
-(respects `narrow-to-region')
-Version 2016-10-06"
-  (interactive)
-  (kill-new (buffer-string))
-  (message "Buffer content copied."))
+;; (defun xah-copy-all ()
+;;   "Put the whole buffer content into the `kill-ring'.
+;; (respects `narrow-to-region')
+;; Version 2016-10-06"
+;;   (interactive)
+;;   (kill-new (buffer-string))
+;;   (message "Buffer content copied."))
 
-(defun xah-cut-all ()
-  "Cut the whole buffer content into the `kill-ring'.
-Respects `narrow-to-region'.
-Version 2017-01-03"
-  (interactive)
-  (kill-new (buffer-string))
-  (delete-region (point-min) (point-max)))
+;; (defun xah-cut-all ()
+;;   "Cut the whole buffer content into the `kill-ring'.
+;; Respects `narrow-to-region'.
+;; Version 2017-01-03"
+;;   (interactive)
+;;   (kill-new (buffer-string))
+;;   (delete-region (point-min) (point-max)))
 
 (defun xah-paste-or-paste-previous ()
   "Paste. When called repeatedly, paste previous.
@@ -514,20 +516,20 @@ Version 2017-07-25"
           (yank-pop 1)
         (yank)))))
 
-(defun xah-show-kill-ring ()
-  "Insert all `kill-ring' content in a new buffer.
+;; (defun xah-show-kill-ring ()
+;;   "Insert all `kill-ring' content in a new buffer.
 
-URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
-Version 2017-06-19"
-  (interactive)
-  (let (($buf (generate-new-buffer "untitled")))
-    (progn
-      (switch-to-buffer $buf)
-      (funcall 'fundamental-mode)
-      (setq buffer-offer-save t)
-      (dolist (x kill-ring )
-        (insert x "\n--------------------------------------------------\n\n"))
-      (goto-char (point-min)))))
+;; URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
+;; Version 2017-06-19"
+;;   (interactive)
+;;   (let (($buf (generate-new-buffer "untitled")))
+;;     (progn
+;;       (switch-to-buffer $buf)
+;;       (funcall 'fundamental-mode)
+;;       (setq buffer-offer-save t)
+;;       (dolist (x kill-ring )
+;;         (insert x "\n--------------------------------------------------\n\n"))
+;;       (goto-char (point-min)))))
 
 (defun xah-delete-backward-char-or-bracket-text ()
   "Delete backward 1 character, but if it's a \"quote\" or bracket ()[]{}【】「」 etc, delete bracket and the inner text, push the deleted text to `kill-ring'.
@@ -564,42 +566,42 @@ Version 2017-07-02"
      (t
       (delete-char -1)))))
 
-(defun xah-delete-backward-bracket-text ()
-  "Delete the matching brackets/quotes to the left of cursor, including the inner text.
+;; (defun xah-delete-backward-bracket-text ()
+;;   "Delete the matching brackets/quotes to the left of cursor, including the inner text.
 
-This command assumes the left of cursor is a right bracket, and there's a matching one before it.
+;; This command assumes the left of cursor is a right bracket, and there's a matching one before it.
 
-What char is considered bracket or quote is determined by current syntax table.
+;; What char is considered bracket or quote is determined by current syntax table.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-09-21"
-  (interactive)
-  (progn
-    (forward-sexp -1)
-    (mark-sexp)
-    (kill-region (region-beginning) (region-end))))
+;; URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
+;; Version 2017-09-21"
+;;   (interactive)
+;;   (progn
+;;     (forward-sexp -1)
+;;     (mark-sexp)
+;;     (kill-region (region-beginning) (region-end))))
 
-(defun xah-delete-backward-bracket-pair ()
-  "Delete the matching brackets/quotes to the left of cursor.
+;; (defun xah-delete-backward-bracket-pair ()
+;;   "Delete the matching brackets/quotes to the left of cursor.
 
-After the command, mark is set at the left matching bracket position, so you can `exchange-point-and-mark' to select it.
+;; After the command, mark is set at the left matching bracket position, so you can `exchange-point-and-mark' to select it.
 
-This command assumes the left of point is a right bracket, and there's a matching one before it.
+;; This command assumes the left of point is a right bracket, and there's a matching one before it.
 
-What char is considered bracket or quote is determined by current syntax table.
+;; What char is considered bracket or quote is determined by current syntax table.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-07-02"
-  (interactive)
-  (let (( $p0 (point)) $p1)
-    (forward-sexp -1)
-    (setq $p1 (point))
-    (goto-char $p0)
-    (delete-char -1)
-    (goto-char $p1)
-    (delete-char 1)
-    (push-mark (point) t)
-    (goto-char (- $p0 2))))
+;; URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
+;; Version 2017-07-02"
+;;   (interactive)
+;;   (let (( $p0 (point)) $p1)
+;;     (forward-sexp -1)
+;;     (setq $p1 (point))
+;;     (goto-char $p0)
+;;     (delete-char -1)
+;;     (goto-char $p1)
+;;     (delete-char 1)
+;;     (push-mark (point) t)
+;;     (goto-char (- $p0 2))))
 
 (defun xah-delete-forward-bracket-pairs ( &optional @delete-inner-text-p)
   "Delete the matching brackets/quotes to the right of cursor.
@@ -661,17 +663,17 @@ Version 2017-04-19"
 ;; test-case
 ;; tes▮t-case
 
-(defun xah-toggle-previous-letter-case ()
-  "Toggle the letter case of the letter to the left of cursor.
-URL `http://ergoemacs.org/emacs/modernization_upcase-word.html'
-Version 2015-12-22"
-  (interactive)
-  (let ((case-fold-search nil))
-    (left-char 1)
-    (cond
-     ((looking-at "[[:lower:]]") (upcase-region (point) (1+ (point))))
-     ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
-    (right-char)))
+;; (defun xah-toggle-previous-letter-case ()
+;;   "Toggle the letter case of the letter to the left of cursor.
+;; URL `http://ergoemacs.org/emacs/modernization_upcase-word.html'
+;; Version 2015-12-22"
+;;   (interactive)
+;;   (let ((case-fold-search nil))
+;;     (left-char 1)
+;;     (cond
+;;      ((looking-at "[[:lower:]]") (upcase-region (point) (1+ (point))))
+;;      ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
+;;     (right-char)))
 
 (defun xah-shrink-whitespaces ()
   "Remove whitespaces around cursor to just one or none.
@@ -740,70 +742,70 @@ Version 2017-01-08"
         (fill-region $p1 $p2)))
     (put this-command 'compact-p (not $compact-p))))
 
-(defun xah-unfill-paragraph ()
-  "Replace newline chars in current paragraph by single spaces.
-This command does the inverse of `fill-paragraph'.
+;; (defun xah-unfill-paragraph ()
+;;   "Replace newline chars in current paragraph by single spaces.
+;; This command does the inverse of `fill-paragraph'.
 
-URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
-Version 2016-07-13"
-  (interactive)
-  (let ((fill-column most-positive-fixnum))
-    (fill-paragraph)))
+;; URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
+;; Version 2016-07-13"
+;;   (interactive)
+;;   (let ((fill-column most-positive-fixnum))
+;;     (fill-paragraph)))
 
-(defun xah-unfill-region (@begin @end)
-  "Replace newline chars in region by single spaces.
-This command does the inverse of `fill-region'.
+;; (defun xah-unfill-region (@begin @end)
+;;   "Replace newline chars in region by single spaces.
+;; This command does the inverse of `fill-region'.
 
-URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
-Version 2016-07-13"
-  (interactive "r")
-  (let ((fill-column most-positive-fixnum))
-    (fill-region @begin @end)))
+;; URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
+;; Version 2016-07-13"
+;;   (interactive "r")
+;;   (let ((fill-column most-positive-fixnum))
+;;     (fill-region @begin @end)))
 
-(defun xah-reformat-lines ( &optional @length)
-  "Reformat current text block into 1 long line or multiple short lines.
-When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
+;; (defun xah-reformat-lines ( &optional @length)
+;;   "Reformat current text block into 1 long line or multiple short lines.
+;; When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
 
-When the command is called for the first time, it checks the current line's length to decide to go into 1 line or multiple lines. If current line is short, it'll reformat to 1 long lines. And vice versa.
+;; When the command is called for the first time, it checks the current line's length to decide to go into 1 line or multiple lines. If current line is short, it'll reformat to 1 long lines. And vice versa.
 
-Repeated call toggles between formatting to 1 long line and multiple lines.
+;; Repeated call toggles between formatting to 1 long line and multiple lines.
 
-If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
+;; If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
-Version 2017-10-22"
-  (interactive)
-  ;; This command symbol has a property “'is-longline-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
-  (let* (
-         (@length (if @length
-                      @length
-                    (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70 )))
-         (is-longline-p
-          (if (eq last-command this-command)
-              (get this-command 'is-longline-p)
-            (> (- (line-end-position) (line-beginning-position)) @length)))
-         ($blanks-regex "\n[ \t]*\n")
-         $p1 $p2
-         )
-    (if (use-region-p)
-        (progn (setq $p1 (region-beginning))
-               (setq $p2 (region-end)))
-      (save-excursion
-        (if (re-search-backward $blanks-regex nil "move")
-            (progn (re-search-forward $blanks-regex)
-                   (setq $p1 (point)))
-          (setq $p1 (point)))
-        (if (re-search-forward $blanks-regex nil "move")
-            (progn (re-search-backward $blanks-regex)
-                   (setq $p2 (point)))
-          (setq $p2 (point)))))
-    (progn
-      (if current-prefix-arg
-          (xah-reformat-to-multi-lines $p1 $p2 @length)
-        (if is-longline-p
-            (xah-reformat-to-multi-lines $p1 $p2 @length)
-          (xah-reformat-whitespaces-to-one-space $p1 $p2)))
-      (put this-command 'is-longline-p (not is-longline-p)))))
+;; URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
+;; Version 2017-10-22"
+;;   (interactive)
+;;   ;; This command symbol has a property “'is-longline-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
+;;   (let* (
+;;          (@length (if @length
+;;                       @length
+;;                     (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70 )))
+;;          (is-longline-p
+;;           (if (eq last-command this-command)
+;;               (get this-command 'is-longline-p)
+;;             (> (- (line-end-position) (line-beginning-position)) @length)))
+;;          ($blanks-regex "\n[ \t]*\n")
+;;          $p1 $p2
+;;          )
+;;     (if (use-region-p)
+;;         (progn (setq $p1 (region-beginning))
+;;                (setq $p2 (region-end)))
+;;       (save-excursion
+;;         (if (re-search-backward $blanks-regex nil "move")
+;;             (progn (re-search-forward $blanks-regex)
+;;                    (setq $p1 (point)))
+;;           (setq $p1 (point)))
+;;         (if (re-search-forward $blanks-regex nil "move")
+;;             (progn (re-search-backward $blanks-regex)
+;;                    (setq $p2 (point)))
+;;           (setq $p2 (point)))))
+;;     (progn
+;;       (if current-prefix-arg
+;;           (xah-reformat-to-multi-lines $p1 $p2 @length)
+;;         (if is-longline-p
+;;             (xah-reformat-to-multi-lines $p1 $p2 @length)
+;;           (xah-reformat-whitespaces-to-one-space $p1 $p2)))
+;;       (put this-command 'is-longline-p (not is-longline-p)))))
 
 (defun xah-reformat-whitespaces-to-one-space (@begin @end)
   "Replace whitespaces by one space.
@@ -827,69 +829,69 @@ Version 2017-01-11"
           (re-search-forward "  +" nil "move")
         (replace-match " ")))))
 
-(defun xah-reformat-to-multi-lines ( &optional @begin @end @min-length)
-  "Replace spaces by a newline at places so lines are not long.
-When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
+;; (defun xah-reformat-to-multi-lines ( &optional @begin @end @min-length)
+;;   "Replace spaces by a newline at places so lines are not long.
+;; When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
 
-If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
+;; If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
-Version 2017-10-22"
-  (interactive)
-  (let (
-        $p1 $p2
-        ($blanks-regex "\n[ \t]*\n")
-        ($minlen (if @min-length
-                     @min-length
-                   (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70 ))))
-    (if (and  @begin @end)
-        (setq $p1 @begin $p2 @end)
-      (if (region-active-p)
-          (progn (setq $p1 (region-beginning) $p2 (region-end)))
-        (save-excursion
-          (if (re-search-backward $blanks-regex nil "move")
-              (progn (re-search-forward $blanks-regex)
-                     (setq $p1 (point)))
-            (setq $p1 (point)))
-          (if (re-search-forward $blanks-regex nil "move")
-              (progn (re-search-backward $blanks-regex)
-                     (setq $p2 (point)))
-            (setq $p2 (point))))))
-    (save-excursion
-      (save-restriction
-        (narrow-to-region $p1 $p2)
-        (goto-char (point-min))
-        (while
-            (re-search-forward " +" nil "move")
-          (when (> (- (point) (line-beginning-position)) $minlen)
-            (replace-match "\n" )))))))
+;; URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
+;; Version 2017-10-22"
+;;   (interactive)
+;;   (let (
+;;         $p1 $p2
+;;         ($blanks-regex "\n[ \t]*\n")
+;;         ($minlen (if @min-length
+;;                      @min-length
+;;                    (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70 ))))
+;;     (if (and  @begin @end)
+;;         (setq $p1 @begin $p2 @end)
+;;       (if (region-active-p)
+;;           (progn (setq $p1 (region-beginning) $p2 (region-end)))
+;;         (save-excursion
+;;           (if (re-search-backward $blanks-regex nil "move")
+;;               (progn (re-search-forward $blanks-regex)
+;;                      (setq $p1 (point)))
+;;             (setq $p1 (point)))
+;;           (if (re-search-forward $blanks-regex nil "move")
+;;               (progn (re-search-backward $blanks-regex)
+;;                      (setq $p2 (point)))
+;;             (setq $p2 (point))))))
+;;     (save-excursion
+;;       (save-restriction
+;;         (narrow-to-region $p1 $p2)
+;;         (goto-char (point-min))
+;;         (while
+;;             (re-search-forward " +" nil "move")
+;;           (when (> (- (point) (line-beginning-position)) $minlen)
+;;             (replace-match "\n" )))))))
 
-(defun xah-space-to-newline ()
-  "Replace space sequence to a newline char.
-Works on current block or selection.
+;; (defun xah-space-to-newline ()
+;;   "Replace space sequence to a newline char.
+;; Works on current block or selection.
 
-URL `http://ergoemacs.org/emacs/emacs_space_to_newline.html'
-Version 2017-08-19"
-  (interactive)
-  (let* ( $p1 $p2 )
-    (if (use-region-p)
-        (progn
-          (setq $p1 (region-beginning))
-          (setq $p2 (region-end)))
-      (save-excursion
-        (if (re-search-backward "\n[ \t]*\n" nil "move")
-            (progn (re-search-forward "\n[ \t]*\n")
-                   (setq $p1 (point)))
-          (setq $p1 (point)))
-        (re-search-forward "\n[ \t]*\n" nil "move")
-        (skip-chars-backward " \t\n" )
-        (setq $p2 (point))))
-    (save-excursion
-      (save-restriction
-        (narrow-to-region $p1 $p2)
-        (goto-char (point-min))
-        (while (re-search-forward " +" nil t)
-          (replace-match "\n" ))))))
+;; URL `http://ergoemacs.org/emacs/emacs_space_to_newline.html'
+;; Version 2017-08-19"
+;;   (interactive)
+;;   (let* ( $p1 $p2 )
+;;     (if (use-region-p)
+;;         (progn
+;;           (setq $p1 (region-beginning))
+;;           (setq $p2 (region-end)))
+;;       (save-excursion
+;;         (if (re-search-backward "\n[ \t]*\n" nil "move")
+;;             (progn (re-search-forward "\n[ \t]*\n")
+;;                    (setq $p1 (point)))
+;;           (setq $p1 (point)))
+;;         (re-search-forward "\n[ \t]*\n" nil "move")
+;;         (skip-chars-backward " \t\n" )
+;;         (setq $p2 (point))))
+;;     (save-excursion
+;;       (save-restriction
+;;         (narrow-to-region $p1 $p2)
+;;         (goto-char (point-min))
+;;         (while (re-search-forward " +" nil t)
+;;           (replace-match "\n" ))))))
 
 (defun xah-comment-dwim ()
   "Like `comment-dwim', but toggle comment if cursor is not at end of line.
@@ -1029,37 +1031,37 @@ Version 2017-01-11"
       (while (search-forward "\\\"" nil t)
         (replace-match "\"" "FIXEDCASE" "LITERAL")))))
 
-(defun xah-dired-rename-space-to-underscore ()
-  "In dired, rename current or marked files by replacing space to underscore _.
-If not in `dired', do nothing.
-URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
-Version 2017-01-02"
-  (interactive)
-  (require 'dired-aux)
-  (if (eq major-mode 'dired-mode)
-      (progn
-        (mapc (lambda (x)
-                (when (string-match " " x )
-                  (dired-rename-file x (replace-regexp-in-string " " "_" x) nil)))
-              (dired-get-marked-files ))
-        (revert-buffer))
-    (user-error "Not in dired")))
+;; (defun xah-dired-rename-space-to-underscore ()
+;;   "In dired, rename current or marked files by replacing space to underscore _.
+;; If not in `dired', do nothing.
+;; URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
+;; Version 2017-01-02"
+;;   (interactive)
+;;   (require 'dired-aux)
+;;   (if (eq major-mode 'dired-mode)
+;;       (progn
+;;         (mapc (lambda (x)
+;;                 (when (string-match " " x )
+;;                   (dired-rename-file x (replace-regexp-in-string " " "_" x) nil)))
+;;               (dired-get-marked-files ))
+;;         (revert-buffer))
+;;     (user-error "Not in dired")))
 
-(defun xah-dired-rename-space-to-hyphen ()
-  "In dired, rename current or marked files by replacing space to hyphen -.
-If not in `dired', do nothing.
-URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
-Version 2016-12-22"
-  (interactive)
-  (require 'dired-aux)
-  (if (eq major-mode 'dired-mode)
-      (progn
-        (mapc (lambda (x)
-                (when (string-match " " x )
-                  (dired-rename-file x (replace-regexp-in-string " " "_" x) nil)))
-              (dired-get-marked-files ))
-        (revert-buffer))
-    (user-error "Not in dired")))
+;; (defun xah-dired-rename-space-to-hyphen ()
+;;   "In dired, rename current or marked files by replacing space to hyphen -.
+;; If not in `dired', do nothing.
+;; URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
+;; Version 2016-12-22"
+;;   (interactive)
+;;   (require 'dired-aux)
+;;   (if (eq major-mode 'dired-mode)
+;;       (progn
+;;         (mapc (lambda (x)
+;;                 (when (string-match " " x )
+;;                   (dired-rename-file x (replace-regexp-in-string " " "_" x) nil)))
+;;               (dired-get-marked-files ))
+;;         (revert-buffer))
+;;     (user-error "Not in dired")))
 
 (defun xah-cycle-hyphen-underscore-space ( &optional @begin @end )
   "Cycle {underscore, space, hyphen} chars in selection or inside quote/bracket or line.
@@ -1124,18 +1126,18 @@ Version 2017-01-27"
         (setq deactivate-mark nil))
       (put 'xah-cycle-hyphen-underscore-space 'state (% (+ $nowState 1) $length)))))
 
-(defun xah-underscore-to-space-region (@begin @end)
-  "Change underscore char to space.
-URL `http://ergoemacs.org/emacs/elisp_change_space-hyphen_underscore.html'
-Version 2017-01-11"
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region @begin @end)
-      (goto-char (point-min))
-      (while
-          (re-search-forward "_" (point-max) "move")
-        (replace-match " " "FIXEDCASE" "LITERAL")))))
+;; (defun xah-underscore-to-space-region (@begin @end)
+;;   "Change underscore char to space.
+;; URL `http://ergoemacs.org/emacs/elisp_change_space-hyphen_underscore.html'
+;; Version 2017-01-11"
+;;   (interactive "r")
+;;   (save-excursion
+;;     (save-restriction
+;;       (narrow-to-region @begin @end)
+;;       (goto-char (point-min))
+;;       (while
+;;           (re-search-forward "_" (point-max) "move")
+;;         (replace-match " " "FIXEDCASE" "LITERAL")))))
 
 (defun xah-copy-file-path (&optional @dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.
@@ -1188,35 +1190,35 @@ Version 2017-09-01"
 ;;         (when (re-search-forward "[[:graph:]]" )
 ;;           (xah-delete-current-text-block))))))
 
-(defun xah-delete-current-text-block ()
-  "Delete the current text block or selection, and copy to `kill-ring'.
-A “block” is text between blank lines.
+;; (defun xah-delete-current-text-block ()
+;;   "Delete the current text block or selection, and copy to `kill-ring'.
+;; A “block” is text between blank lines.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_block.html'
-Version 2017-07-09"
-  (interactive)
-  (let ($p1 $p2)
-    (if (use-region-p)
-        (setq $p1 (region-beginning) $p2 (region-end))
-      (progn
-        (if (re-search-backward "\n[ \t]*\n+" nil "move")
-            (progn (re-search-forward "\n[ \t]*\n+")
-                   (setq $p1 (point)))
-          (setq $p1 (point)))
-        (re-search-forward "\n[ \t]*\n" nil "move")
-        (setq $p2 (point))))
-    (kill-region $p1 $p2)))
+;; URL `http://ergoemacs.org/emacs/emacs_delete_block.html'
+;; Version 2017-07-09"
+;;   (interactive)
+;;   (let ($p1 $p2)
+;;     (if (use-region-p)
+;;         (setq $p1 (region-beginning) $p2 (region-end))
+;;       (progn
+;;         (if (re-search-backward "\n[ \t]*\n+" nil "move")
+;;             (progn (re-search-forward "\n[ \t]*\n+")
+;;                    (setq $p1 (point)))
+;;           (setq $p1 (point)))
+;;         (re-search-forward "\n[ \t]*\n" nil "move")
+;;         (setq $p2 (point))))
+;;     (kill-region $p1 $p2)))
 
-(defun xah-clear-register-1 ()
-  "Clear register 1.
-See also: `xah-paste-from-register-1', `copy-to-register'.
+;; (defun xah-clear-register-1 ()
+;;   "Clear register 1.
+;; See also: `xah-paste-from-register-1', `copy-to-register'.
 
-URL `http://ergoemacs.org/emacs/elisp_copy-paste_register_1.html'
-Version 2015-12-08"
-  (interactive)
-  (progn
-    (copy-to-register ?1 (point-min) (point-min))
-    (message "Cleared register 1.")))
+;; URL `http://ergoemacs.org/emacs/elisp_copy-paste_register_1.html'
+;; Version 2015-12-08"
+;;   (interactive)
+;;   (progn
+;;     (copy-to-register ?1 (point-min) (point-min))
+;;     (message "Cleared register 1.")))
 
 (defun xah-copy-to-register-1 ()
   "Copy current line or text selection to register 1.
@@ -1263,15 +1265,15 @@ Version 2015-12-08"
     (delete-region (region-beginning) (region-end)))
   (insert-register ?1 t))
 
-(defun xah-copy-rectangle-to-kill-ring (@begin @end)
-  "Copy region as column (rectangle region) to `kill-ring'
-See also: `kill-rectangle', `copy-to-register'.
-URL `http://ergoemacs.org/emacs/emacs_copy_rectangle_text_to_clipboard.html'
-version 2016-07-17"
-  ;; extract-rectangle suggested by YoungFrog, 2012-07-25
-  (interactive "r")
-  (require 'rect)
-  (kill-new (mapconcat 'identity (extract-rectangle @begin @end) "\n")))
+;; (defun xah-copy-rectangle-to-kill-ring (@begin @end)
+;;   "Copy region as column (rectangle region) to `kill-ring'
+;; See also: `kill-rectangle', `copy-to-register'.
+;; URL `http://ergoemacs.org/emacs/emacs_copy_rectangle_text_to_clipboard.html'
+;; version 2016-07-17"
+;;   ;; extract-rectangle suggested by YoungFrog, 2012-07-25
+;;   (interactive "r")
+;;   (require 'rect)
+;;   (kill-new (mapconcat 'identity (extract-rectangle @begin @end) "\n")))
 
 (defun xah-upcase-sentence ()
   "Upcase first letters of sentences of current text block or selection.
@@ -1390,73 +1392,73 @@ Version 2017-01-11"
 
 ;; insertion commands
 
-(defun xah-insert-date ()
-  "Insert current date and or time.
-Insert date in this format: yyyy-mm-dd.
-When called with `universal-argument', prompt for a format to use.
-If there's text selection, delete it first.
+;; (defun xah-insert-date ()
+;;   "Insert current date and or time.
+;; Insert date in this format: yyyy-mm-dd.
+;; When called with `universal-argument', prompt for a format to use.
+;; If there's text selection, delete it first.
 
-Do not use this function in lisp code. Call `format-time-string' directly.
+;; Do not use this function in lisp code. Call `format-time-string' directly.
 
-URL `http://ergoemacs.org/emacs/elisp_insert-date-time.html'
-version 2016-12-18"
-  (interactive)
-  (when (use-region-p) (delete-region (region-beginning) (region-end)))
-  (let (($style
-         (if current-prefix-arg
-             (string-to-number
-              (substring
-               (ido-completing-read
-                "Style:"
-                '(
-                  "1 → 2016-10-10 Monday"
-                  "2 → 2016-10-10T19:39:47-07:00"
-                  "3 → 2016-10-10 19:39:58-07:00"
-                  "4 → Monday, October 10, 2016"
-                  "5 → Mon, Oct 10, 2016"
-                  "6 → October 10, 2016"
-                  "7 → Oct 10, 2016"
-                  )) 0 1))
-           0
-           )))
-    (insert
-     (cond
-      ((= $style 0)
-       (format-time-string "%Y-%m-%d") ; "2016-10-10"
-       )
-      ((= $style 1)
-       (format-time-string "%Y-%m-%d %A") ; "2016-10-10 Monday"
-       )
-      ((= $style 2)
-       (concat
-        (format-time-string "%Y-%m-%dT%T")
-        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
-       ;; eg "2016-10-10T19:02:23-07:00"
-       )
-      ((= $style 3)
-       (concat
-        (format-time-string "%Y-%m-%d %T")
-        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
-       ;; eg "2016-10-10 19:10:09-07:00"
-       )
-      ((= $style 4)
-       (format-time-string "%A, %B %d, %Y")
-       ;; eg "Monday, October 10, 2016"
-       )
-      ((= $style 5)
-       (format-time-string "%a, %b %d, %Y")
-       ;; eg "Mon, Oct 10, 2016"
-       )
-      ((= $style 6)
-       (format-time-string "%B %d, %Y")
-       ;; eg "October 10, 2016"
-       )
-      ((= $style 7)
-       (format-time-string "%b %d, %Y")
-       ;; eg "Oct 10, 2016"
-       )
-      (t
-       (format-time-string "%Y-%m-%d"))))))
+;; URL `http://ergoemacs.org/emacs/elisp_insert-date-time.html'
+;; version 2016-12-18"
+;;   (interactive)
+;;   (when (use-region-p) (delete-region (region-beginning) (region-end)))
+;;   (let (($style
+;;          (if current-prefix-arg
+;;              (string-to-number
+;;               (substring
+;;                (ido-completing-read
+;;                 "Style:"
+;;                 '(
+;;                   "1 → 2016-10-10 Monday"
+;;                   "2 → 2016-10-10T19:39:47-07:00"
+;;                   "3 → 2016-10-10 19:39:58-07:00"
+;;                   "4 → Monday, October 10, 2016"
+;;                   "5 → Mon, Oct 10, 2016"
+;;                   "6 → October 10, 2016"
+;;                   "7 → Oct 10, 2016"
+;;                   )) 0 1))
+;;            0
+;;            )))
+;;     (insert
+;;      (cond
+;;       ((= $style 0)
+;;        (format-time-string "%Y-%m-%d") ; "2016-10-10"
+;;        )
+;;       ((= $style 1)
+;;        (format-time-string "%Y-%m-%d %A") ; "2016-10-10 Monday"
+;;        )
+;;       ((= $style 2)
+;;        (concat
+;;         (format-time-string "%Y-%m-%dT%T")
+;;         (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
+;;        ;; eg "2016-10-10T19:02:23-07:00"
+;;        )
+;;       ((= $style 3)
+;;        (concat
+;;         (format-time-string "%Y-%m-%d %T")
+;;         (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
+;;        ;; eg "2016-10-10 19:10:09-07:00"
+;;        )
+;;       ((= $style 4)
+;;        (format-time-string "%A, %B %d, %Y")
+;;        ;; eg "Monday, October 10, 2016"
+;;        )
+;;       ((= $style 5)
+;;        (format-time-string "%a, %b %d, %Y")
+;;        ;; eg "Mon, Oct 10, 2016"
+;;        )
+;;       ((= $style 6)
+;;        (format-time-string "%B %d, %Y")
+;;        ;; eg "October 10, 2016"
+;;        )
+;;       ((= $style 7)
+;;        (format-time-string "%b %d, %Y")
+;;        ;; eg "Oct 10, 2016"
+;;        )
+;;       (t
+;;        (format-time-string "%Y-%m-%d"))))))
 
 ;; (defun xah-current-date-time-string ()
 ;;   "Returns current date-time string in full ISO 8601 format.
@@ -1576,15 +1578,15 @@ Version 2017-01-17"
 (defun xah-insert-black-lenticular-bracket【】 () (interactive) (xah-insert-bracket-pair "【" "】") )
 (defun xah-insert-tortoise-shell-bracket〔〕 () (interactive) (xah-insert-bracket-pair "〔" "〕" ) )
 
-(defun xah-insert-hyphen ()
-  "Insert a HYPHEN-MINUS character."
-  (interactive)
-  (insert "-"))
+;; (defun xah-insert-hyphen ()
+;;   "Insert a HYPHEN-MINUS character."
+;;   (interactive)
+;;   (insert "-"))
 
-(defun xah-insert-low-line ()
-  "Insert a LOW LINE character."
-  (interactive)
-  (insert "_"))
+;; (defun xah-insert-low-line ()
+;;   "Insert a LOW LINE character."
+;;   (interactive)
+;;   (insert "_"))
 
 (defun xah-insert-string-assignment ()
   "Insert space before cursor"
@@ -1597,87 +1599,87 @@ Version 2017-01-17"
   (interactive)
   (insert " "))
 
-(defun xah-insert-space-after ()
-  "Insert space after cursor"
-  (interactive)
-  (insert " ")
-  (left-char))
+;; (defun xah-insert-space-after ()
+;;   "Insert space after cursor"
+;;   (interactive)
+;;   (insert " ")
+;;   (left-char))
 
-(defun xah-insert-form-feed ()
-  "Insert a form feed char (codepoint 12)"
-  (interactive)
-  (insert "\n\n"))
+;; (defun xah-insert-form-feed ()
+;;   "Insert a form feed char (codepoint 12)"
+;;   (interactive)
+;;   (insert "\n\n"))
 
-(defun xah-insert-column-counter (@n)
-  "Insert a sequence of numbers vertically.
+;; (defun xah-insert-column-counter (@n)
+;;   "Insert a sequence of numbers vertically.
 
- (this command is similar to emacs 24.x's `rectangle-number-lines'.)
+;;  (this command is similar to emacs 24.x's `rectangle-number-lines'.)
 
-For example, if your text is:
+;; For example, if your text is:
 
-a b
-c d
-e f
+;; a b
+;; c d
+;; e f
 
-and your cursor is after “a”, then calling this function with argument
-3 will change it to become:
+;; and your cursor is after “a”, then calling this function with argument
+;; 3 will change it to become:
 
-a1 b
-c2 d
-e3 f
+;; a1 b
+;; c2 d
+;; e3 f
 
-If there are not enough existing lines after the cursor
-when this function is called, it aborts at the last line.
+;; If there are not enough existing lines after the cursor
+;; when this function is called, it aborts at the last line.
 
-This command is conveniently used together with `kill-rectangle' and `string-rectangle'."
-  (interactive "nEnter the max integer: ")
-  (let (($i 1) $colpos )
-    (setq $colpos (- (point) (line-beginning-position)))
-    (while (<= $i @n)
-      (insert (number-to-string $i))
-      (forward-line) (beginning-of-line) (forward-char $colpos)
-      (setq $i (1+ $i)))))
+;; This command is conveniently used together with `kill-rectangle' and `string-rectangle'."
+;;   (interactive "nEnter the max integer: ")
+;;   (let (($i 1) $colpos )
+;;     (setq $colpos (- (point) (line-beginning-position)))
+;;     (while (<= $i @n)
+;;       (insert (number-to-string $i))
+;;       (forward-line) (beginning-of-line) (forward-char $colpos)
+;;       (setq $i (1+ $i)))))
 
-(defun xah-insert-alphabets-az (&optional @use-uppercase-p)
-  "Insert letters a to z vertically.
-If `universal-argument' is called first, use CAPITAL letters.
+;; (defun xah-insert-alphabets-az (&optional @use-uppercase-p)
+;;   "Insert letters a to z vertically.
+;; If `universal-argument' is called first, use CAPITAL letters.
 
-URL `http://ergoemacs.org/emacs/emacs_insert-alphabets.html'
-Version 2015-11-06"
-  (interactive "P")
-  (let (($startChar (if @use-uppercase-p 65 97 )))
-    (dotimes ($i 26)
-      (insert (format "%c\n" (+ $startChar $i))))))
+;; URL `http://ergoemacs.org/emacs/emacs_insert-alphabets.html'
+;; Version 2015-11-06"
+;;   (interactive "P")
+;;   (let (($startChar (if @use-uppercase-p 65 97 )))
+;;     (dotimes ($i 26)
+;;       (insert (format "%c\n" (+ $startChar $i))))))
 
-(defvar xah-unicode-list nil "Associative list of Unicode symbols. First element is a Unicode character, second element is a string used as key shortcut in `ido-completing-read'")
-(setq xah-unicode-list
-      '(
-        ("_" . "underscore" )
-        ("•" . ".bullet" )
-        ("→" . "tn")
-        ("◇" . "3" )
-        ("◆" . "4" )
-        ("¤" . "2" )
-        ("…" . "...ellipsis" )
-        (" " . "nbsp" )
-        ("、" . "," )
-        ("⭑" . "9" )
-        ("🎶" . "5" )
-        ("—" . "-emdash" )
-        ("＆" . "7" )
-        ("↓" . "tt")
-        ("←" . "th")
-        ("↑" . "tc")
-        ("👍" . "tu")
-        ) )
+;; (defvar xah-unicode-list nil "Associative list of Unicode symbols. First element is a Unicode character, second element is a string used as key shortcut in `ido-completing-read'")
+;; (setq xah-unicode-list
+;;       '(
+;;         ("_" . "underscore" )
+;;         ("•" . ".bullet" )
+;;         ("→" . "tn")
+;;         ("◇" . "3" )
+;;         ("◆" . "4" )
+;;         ("¤" . "2" )
+;;         ("…" . "...ellipsis" )
+;;         (" " . "nbsp" )
+;;         ("、" . "," )
+;;         ("⭑" . "9" )
+;;         ("🎶" . "5" )
+;;         ("—" . "-emdash" )
+;;         ("＆" . "7" )
+;;         ("↓" . "tt")
+;;         ("←" . "th")
+;;         ("↑" . "tc")
+;;         ("👍" . "tu")
+;;         ) )
 
-(defun xah-insert-unicode ()
-  "Insert a unicode"
-  (interactive)
-  (let (gotThis)
-    (setq gotThis
-          (ido-completing-read "insert:" (mapcar (lambda (x) (concat (car x) (cdr x))) xah-unicode-list)))
-    (insert (car (assoc (substring gotThis 0 1) xah-unicode-list)))))
+;; (defun xah-insert-unicode ()
+;;   "Insert a unicode"
+;;   (interactive)
+;;   (let (gotThis)
+;;     (setq gotThis
+;;           (ido-completing-read "insert:" (mapcar (lambda (x) (concat (car x) (cdr x))) xah-unicode-list)))
+;;     (insert (car (assoc (substring gotThis 0 1) xah-unicode-list)))))
 
 
 ;; text selection
@@ -1732,133 +1734,133 @@ Version 2017-11-01"
       (end-of-line)
       (set-mark (line-beginning-position)))))
 
-(defun xah-extend-selection ()
-  "Select the current word, bracket/quote expression, or expand selection.
-Subsequent calls expands the selection.
+;; (defun xah-extend-selection ()
+;;   "Select the current word, bracket/quote expression, or expand selection.
+;; Subsequent calls expands the selection.
 
-when there's no selection,
-• if cursor is on a any type of bracket (parenthesis, quote), select whole bracketed thing including bracket
-• else, select current word.
+;; when there's no selection,
+;; • if cursor is on a any type of bracket (parenthesis, quote), select whole bracketed thing including bracket
+;; • else, select current word.
 
-when there's a selection, the selection extension behavior is still experimental. But when cursor is on a any type of bracket (parenthesis, quote), it extends selection to outer bracket.
+;; when there's a selection, the selection extension behavior is still experimental. But when cursor is on a any type of bracket (parenthesis, quote), it extends selection to outer bracket.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2017-09-01"
-  (interactive)
-  (if (region-active-p)
-      (progn
-        (let (($rb (region-beginning)) ($re (region-end)))
-          (goto-char $rb)
-          (cond
-           ((looking-at "\\s(")
-            (if (eq (nth 0 (syntax-ppss)) 0)
-                (progn
-                  ;; (message "left bracket, depth 0.")
-                  (end-of-line) ; select current line
-                  (set-mark (line-beginning-position)))
-              (progn
-                ;; (message "left bracket, depth not 0")
-                (up-list -1 t t)
-                (mark-sexp))))
-           ((eq $rb (line-beginning-position))
-            (progn
-              (goto-char $rb)
-              (let (($firstLineEndPos (line-end-position)))
-                (cond
-                 ((eq $re $firstLineEndPos)
-                  (progn
-                    ;; (message "exactly 1 line. extend to next whole line." )
-                    (forward-line 1)
-                    (end-of-line)))
-                 ((< $re $firstLineEndPos)
-                  (progn
-                    ;; (message "less than 1 line. complete the line." )
-                    (end-of-line)))
-                 ((> $re $firstLineEndPos)
-                  (progn
-                    ;; (message "beginning of line, but end is greater than 1st end of line" )
-                    (goto-char $re)
-                    (if (eq (point) (line-end-position))
-                        (progn
-                          ;; (message "exactly multiple lines" )
-                          (forward-line 1)
-                          (end-of-line))
-                      (progn
-                        ;; (message "multiple lines but end is not eol. make it so" )
-                        (goto-char $re)
-                        (end-of-line)))))
-                 (t (error "logic error 42946" ))))))
-           ((and (> (point) (line-beginning-position)) (<= (point) (line-end-position)))
-            (progn
-              ;; (message "less than 1 line" )
-              (end-of-line) ; select current line
-              (set-mark (line-beginning-position))))
-           (t
-            ;; (message "last resort" )
-            nil))))
-    (progn
-      (cond
-       ((looking-at "\\s(")
-        ;; (message "left bracket")
-        (mark-sexp)) ; left bracket
-       ((looking-at "\\s)")
-        ;; (message "right bracket")
-        (backward-up-list) (mark-sexp))
-       ((looking-at "\\s\"")
-        ;; (message "string quote")
-        (mark-sexp)) ; string quote
-       ;; ((and (eq (point) (line-beginning-position)) (not (looking-at "\n")))
-       ;;  (message "beginning of line and not empty")
-       ;;  (end-of-line)
-       ;;  (set-mark (line-beginning-position)))
-       ((or (looking-back "\\s_" 1) (looking-back "\\sw" 1))
-        ;; (message "left is word or symbol")
-        (skip-syntax-backward "_w" )
-        ;; (re-search-backward "^\\(\\sw\\|\\s_\\)" nil t)
-        (push-mark)
-        (skip-syntax-forward "_w")
-        (setq mark-active t)
-        ;; (exchange-point-and-mark)
-        )
-       ((and (looking-at "\\s ") (looking-back "\\s " 1))
-        ;; (message "left and right both space" )
-        (skip-chars-backward "\\s " ) (set-mark (point))
-        (skip-chars-forward "\\s "))
-       ((and (looking-at "\n") (looking-back "\n" 1))
-        ;; (message "left and right both newline")
-        (skip-chars-forward "\n")
-        (set-mark (point))
-        (re-search-forward "\n[ \t]*\n")) ; between blank lines, select next text block
-       (t
-        ;; (message "just mark sexp" )
-        (mark-sexp)
-        (exchange-point-and-mark))
-       ;;
-       ))))
+;; URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
+;; Version 2017-09-01"
+;;   (interactive)
+;;   (if (region-active-p)
+;;       (progn
+;;         (let (($rb (region-beginning)) ($re (region-end)))
+;;           (goto-char $rb)
+;;           (cond
+;;            ((looking-at "\\s(")
+;;             (if (eq (nth 0 (syntax-ppss)) 0)
+;;                 (progn
+;;                   ;; (message "left bracket, depth 0.")
+;;                   (end-of-line) ; select current line
+;;                   (set-mark (line-beginning-position)))
+;;               (progn
+;;                 ;; (message "left bracket, depth not 0")
+;;                 (up-list -1 t t)
+;;                 (mark-sexp))))
+;;            ((eq $rb (line-beginning-position))
+;;             (progn
+;;               (goto-char $rb)
+;;               (let (($firstLineEndPos (line-end-position)))
+;;                 (cond
+;;                  ((eq $re $firstLineEndPos)
+;;                   (progn
+;;                     ;; (message "exactly 1 line. extend to next whole line." )
+;;                     (forward-line 1)
+;;                     (end-of-line)))
+;;                  ((< $re $firstLineEndPos)
+;;                   (progn
+;;                     ;; (message "less than 1 line. complete the line." )
+;;                     (end-of-line)))
+;;                  ((> $re $firstLineEndPos)
+;;                   (progn
+;;                     ;; (message "beginning of line, but end is greater than 1st end of line" )
+;;                     (goto-char $re)
+;;                     (if (eq (point) (line-end-position))
+;;                         (progn
+;;                           ;; (message "exactly multiple lines" )
+;;                           (forward-line 1)
+;;                           (end-of-line))
+;;                       (progn
+;;                         ;; (message "multiple lines but end is not eol. make it so" )
+;;                         (goto-char $re)
+;;                         (end-of-line)))))
+;;                  (t (error "logic error 42946" ))))))
+;;            ((and (> (point) (line-beginning-position)) (<= (point) (line-end-position)))
+;;             (progn
+;;               ;; (message "less than 1 line" )
+;;               (end-of-line) ; select current line
+;;               (set-mark (line-beginning-position))))
+;;            (t
+;;             ;; (message "last resort" )
+;;             nil))))
+;;     (progn
+;;       (cond
+;;        ((looking-at "\\s(")
+;;         ;; (message "left bracket")
+;;         (mark-sexp)) ; left bracket
+;;        ((looking-at "\\s)")
+;;         ;; (message "right bracket")
+;;         (backward-up-list) (mark-sexp))
+;;        ((looking-at "\\s\"")
+;;         ;; (message "string quote")
+;;         (mark-sexp)) ; string quote
+;;        ;; ((and (eq (point) (line-beginning-position)) (not (looking-at "\n")))
+;;        ;;  (message "beginning of line and not empty")
+;;        ;;  (end-of-line)
+;;        ;;  (set-mark (line-beginning-position)))
+;;        ((or (looking-back "\\s_" 1) (looking-back "\\sw" 1))
+;;         ;; (message "left is word or symbol")
+;;         (skip-syntax-backward "_w" )
+;;         ;; (re-search-backward "^\\(\\sw\\|\\s_\\)" nil t)
+;;         (push-mark)
+;;         (skip-syntax-forward "_w")
+;;         (setq mark-active t)
+;;         ;; (exchange-point-and-mark)
+;;         )
+;;        ((and (looking-at "\\s ") (looking-back "\\s " 1))
+;;         ;; (message "left and right both space" )
+;;         (skip-chars-backward "\\s " ) (set-mark (point))
+;;         (skip-chars-forward "\\s "))
+;;        ((and (looking-at "\n") (looking-back "\n" 1))
+;;         ;; (message "left and right both newline")
+;;         (skip-chars-forward "\n")
+;;         (set-mark (point))
+;;         (re-search-forward "\n[ \t]*\n")) ; between blank lines, select next text block
+;;        (t
+;;         ;; (message "just mark sexp" )
+;;         (mark-sexp)
+;;         (exchange-point-and-mark))
+;;        ;;
+;;        ))))
 
-(defun xah-select-text-in-quote ()
-  "Select text between the nearest left and right delimiters.
-Delimiters here includes the following chars: \"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）
-This command select between any bracket chars, not the inner text of a bracket. For example, if text is
+;; (defun xah-select-text-in-quote ()
+;;   "Select text between the nearest left and right delimiters.
+;; Delimiters here includes the following chars: \"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）
+;; This command select between any bracket chars, not the inner text of a bracket. For example, if text is
 
- (a(b)c▮)
+;;  (a(b)c▮)
 
- the selected char is “c”, not “a(b)c”.
+;;  the selected char is “c”, not “a(b)c”.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2016-12-18"
-  (interactive)
-  (let (
-        ($skipChars
-         (if (boundp 'xah-brackets)
-             (concat "^\"" xah-brackets)
-           "^\"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）"))
-        $pos
-        )
-    (skip-chars-backward $skipChars)
-    (setq $pos (point))
-    (skip-chars-forward $skipChars)
-    (set-mark $pos)))
+;; URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
+;; Version 2016-12-18"
+;;   (interactive)
+;;   (let (
+;;         ($skipChars
+;;          (if (boundp 'xah-brackets)
+;;              (concat "^\"" xah-brackets)
+;;            "^\"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）"))
+;;         $pos
+;;         )
+;;     (skip-chars-backward $skipChars)
+;;     (setq $pos (point))
+;;     (skip-chars-forward $skipChars)
+;;     (set-mark $pos)))
 
 
 ;; misc
@@ -2013,91 +2015,91 @@ Prompt for a choice.
 URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
 Version 2016-06-19"
   (interactive)
-  (find-file (ido-completing-read "open:" (mapcar (lambda (f) (cdr f)) xah-recently-closed-buffers))))
+  (find-file (helm-comp-read "Open:" (mapcar (lambda (f) (cdr f)) xah-recently-closed-buffers))))
 
-(defun xah-list-recently-closed ()
-  "List recently closed file.
-URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
-Version 2016-06-19"
-  (interactive)
-  (let (($buf (generate-new-buffer "*recently closed*")))
-    (switch-to-buffer $buf)
-    (mapc (lambda ($f) (insert (cdr $f) "\n"))
-          xah-recently-closed-buffers)))
+;; (defun xah-list-recently-closed ()
+;;   "List recently closed file.
+;; URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
+;; Version 2016-06-19"
+;;   (interactive)
+;;   (let (($buf (generate-new-buffer "*recently closed*")))
+;;     (switch-to-buffer $buf)
+;;     (mapc (lambda ($f) (insert (cdr $f) "\n"))
+;;           xah-recently-closed-buffers)))
 
-(defun xah-open-file-fast ()
-  "Prompt to open a file from bookmark `bookmark-bmenu-list'.
-This command is similar to `bookmark-jump', but use `ido-mode' interface, and ignore cursor position in bookmark.
+;; (defun xah-open-file-fast ()
+;;   "Prompt to open a file from bookmark `bookmark-bmenu-list'.
+;; This command is similar to `bookmark-jump', but use `ido-mode' interface, and ignore cursor position in bookmark.
 
-URL `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
-Version 2017-04-26"
-  (interactive)
-  (require 'bookmark)
-  (bookmark-maybe-load-default-file)
-  (let (($this-bookmark
-         (ido-completing-read "Open bookmark:" (mapcar (lambda ($x) (car $x)) bookmark-alist))))
-    (find-file (bookmark-get-filename $this-bookmark))
-    ;; (bookmark-jump $this-bookmark)
-    ))
+;; URL `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
+;; Version 2017-04-26"
+;;   (interactive)
+;;   (require 'bookmark)
+;;   (bookmark-maybe-load-default-file)
+;;   (let (($this-bookmark
+;;          (ido-completing-read "Open bookmark:" (mapcar (lambda ($x) (car $x)) bookmark-alist))))
+;;     (find-file (bookmark-get-filename $this-bookmark))
+;;     ;; (bookmark-jump $this-bookmark)
+;;     ))
 
-(defun xah-open-file-at-cursor ()
-  "Open the file path under cursor.
-If there is text selection, uses the text selection for path.
-If the path starts with “http://”, open the URL in browser.
-Input path can be {relative, full path, URL}.
-Path may have a trailing “:‹n›” that indicates line number. If so, jump to that line number.
-If path does not have a file extension, automatically try with “.el” for elisp files.
-This command is similar to `find-file-at-point' but without prompting for confirmation.
+;; (defun xah-open-file-at-cursor ()
+;;   "Open the file path under cursor.
+;; If there is text selection, uses the text selection for path.
+;; If the path starts with “http://”, open the URL in browser.
+;; Input path can be {relative, full path, URL}.
+;; Path may have a trailing “:‹n›” that indicates line number. If so, jump to that line number.
+;; If path does not have a file extension, automatically try with “.el” for elisp files.
+;; This command is similar to `find-file-at-point' but without prompting for confirmation.
 
-URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'
-Version 2017-09-01"
-  (interactive)
-  (let* (($inputStr (if (use-region-p)
-                        (buffer-substring-no-properties (region-beginning) (region-end))
-                      (let ($p0 $p1 $p2
-                                ;; chars that are likely to be delimiters of file path or url, e.g. space, tabs, brakets. The colon is a problem. cuz it's in url, but not in file name. Don't want to use just space as delimiter because path or url are often in brackets or quotes as in markdown or html
-                                ($pathStops "^  \t\n\"`'‘’“”|()[]{}「」<>〔〕〈〉《》【】〖〗«»‹›❮❯❬❭·。\\"))
-                        (setq $p0 (point))
-                        (skip-chars-backward $pathStops)
-                        (setq $p1 (point))
-                        (goto-char $p0)
-                        (skip-chars-forward $pathStops)
-                        (setq $p2 (point))
-                        (goto-char $p0)
-                        (buffer-substring-no-properties $p1 $p2))))
-         ($path
-          (replace-regexp-in-string
-           "^file:///" "/"
-           (replace-regexp-in-string
-            ":\\'" "" $inputStr))))
-    (if (string-match-p "\\`https?://" $path)
-        (if (fboundp 'xahsite-url-to-filepath)
-            (let (($x (xahsite-url-to-filepath $path)))
-              (if (string-match "^http" $x )
-                  (browse-url $x)
-                (find-file $x)))
-          (progn (browse-url $path)))
-      (progn ; not starting “http://”
-        (if (string-match "^\\`\\(.+?\\):\\([0-9]+\\)\\'" $path)
-            (progn
-              (let (
-                    ($fpath (match-string 1 $path))
-                    ($line-num (string-to-number (match-string 2 $path))))
-                (if (file-exists-p $fpath)
-                    (progn
-                      (find-file $fpath)
-                      (goto-char 1)
-                      (forward-line (1- $line-num)))
-                  (progn
-                    (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" $fpath))
-                      (find-file $fpath))))))
-          (progn
-            (if (file-exists-p $path)
-                (find-file $path)
-              (if (file-exists-p (concat $path ".el"))
-                  (find-file (concat $path ".el"))
-                (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" $path))
-                  (find-file $path ))))))))))
+;; URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'
+;; Version 2017-09-01"
+;;   (interactive)
+;;   (let* (($inputStr (if (use-region-p)
+;;                         (buffer-substring-no-properties (region-beginning) (region-end))
+;;                       (let ($p0 $p1 $p2
+;;                                 ;; chars that are likely to be delimiters of file path or url, e.g. space, tabs, brakets. The colon is a problem. cuz it's in url, but not in file name. Don't want to use just space as delimiter because path or url are often in brackets or quotes as in markdown or html
+;;                                 ($pathStops "^  \t\n\"`'‘’“”|()[]{}「」<>〔〕〈〉《》【】〖〗«»‹›❮❯❬❭·。\\"))
+;;                         (setq $p0 (point))
+;;                         (skip-chars-backward $pathStops)
+;;                         (setq $p1 (point))
+;;                         (goto-char $p0)
+;;                         (skip-chars-forward $pathStops)
+;;                         (setq $p2 (point))
+;;                         (goto-char $p0)
+;;                         (buffer-substring-no-properties $p1 $p2))))
+;;          ($path
+;;           (replace-regexp-in-string
+;;            "^file:///" "/"
+;;            (replace-regexp-in-string
+;;             ":\\'" "" $inputStr))))
+;;     (if (string-match-p "\\`https?://" $path)
+;;         (if (fboundp 'xahsite-url-to-filepath)
+;;             (let (($x (xahsite-url-to-filepath $path)))
+;;               (if (string-match "^http" $x )
+;;                   (browse-url $x)
+;;                 (find-file $x)))
+;;           (progn (browse-url $path)))
+;;       (progn ; not starting “http://”
+;;         (if (string-match "^\\`\\(.+?\\):\\([0-9]+\\)\\'" $path)
+;;             (progn
+;;               (let (
+;;                     ($fpath (match-string 1 $path))
+;;                     ($line-num (string-to-number (match-string 2 $path))))
+;;                 (if (file-exists-p $fpath)
+;;                     (progn
+;;                       (find-file $fpath)
+;;                       (goto-char 1)
+;;                       (forward-line (1- $line-num)))
+;;                   (progn
+;;                     (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" $fpath))
+;;                       (find-file $fpath))))))
+;;           (progn
+;;             (if (file-exists-p $path)
+;;                 (find-file $path)
+;;               (if (file-exists-p (concat $path ".el"))
+;;                   (find-file (concat $path ".el"))
+;;                 (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" $path))
+;;                   (find-file $path ))))))))))
 
 
 
@@ -2427,200 +2429,222 @@ Version 2017-10-09"
       (start-process "" nil "x-terminal-emulator"
                      (concat "--working-directory=" default-directory))))))
 
-(defun xah-next-window-or-frame ()
-  "Switch to next window or frame.
-If current frame has only one window, switch to next frame.
-If `universal-argument' is called first, do switch frame.
-Version 2017-01-27"
-  (interactive)
-  (if current-prefix-arg
-      (other-frame 1)
-    (if (one-window-p)
-        (other-frame 1)
-      (other-window 1))))
+;; (defun xah-next-window-or-frame ()
+;;   "Switch to next window or frame.
+;; If current frame has only one window, switch to next frame.
+;; If `universal-argument' is called first, do switch frame.
+;; Version 2017-01-27"
+;;   (interactive)
+;;   (if current-prefix-arg
+;;       (other-frame 1)
+;;     (if (one-window-p)
+;;         (other-frame 1)
+;;       (other-window 1))))
 
-(defun xah-unplit-window-or-next-frame ()
-  "Unsplit window. If current frame has only one window, switch to next frame.
-Version 2017-01-29"
-  (interactive)
-  (if (one-window-p)
-      (other-frame 1)
-    (delete-other-windows)))
+;; (defun xah-unsplit-window-or-next-frame ()
+;;   "Unsplit window. If current frame has only one window, switch to next frame.
+;; Version 2017-01-29"
+;;   (interactive)
+;;   (if (one-window-p)
+;;       (other-frame 1)
+;;     (delete-other-windows)))
 
-(defun xah-describe-major-mode ()
-  "Display inline doc for current `major-mode'."
-  (interactive)
-  (describe-function major-mode))
+;; (defun xah-describe-major-mode ()
+;;   "Display inline doc for current `major-mode'."
+;;   (interactive)
+;;   (describe-function major-mode))
 
 
 
-(defvar xah--dvorak-to-qwerty-kmap
-  '(("." . "e")
-    ("," . "w")
-    ("'" . "q")
-    (";" . "z")
-    ("/" . "[")
-    ("[" . "-")
-    ("]" . "=")
-    ("=" . "]")
-    ("-" . "'")
+;; (defvar xah--dvorak-to-qwerty-kmap
+;;   '(("." . "e")
+;;     ("," . "w")
+;;     ("'" . "q")
+;;     (";" . "z")
+;;     ("/" . "[")
+;;     ("[" . "-")
+;;     ("]" . "=")
+;;     ("=" . "]")
+;;     ("-" . "'")
 
-    ("a" . "a")
-    ("b" . "n")
-    ("c" . "i")
-    ("d" . "h")
-    ("e" . "d")
-    ("f" . "y")
-    ("g" . "u")
-    ("h" . "j")
-    ("i" . "g")
-    ("j" . "c")
-    ("k" . "v")
-    ("l" . "p")
-    ("m" . "m")
-    ("n" . "l")
-    ("o" . "s")
-    ("p" . "r")
-    ("q" . "x")
-    ("r" . "o")
-    ("s" . ";")
-    ("t" . "k")
-    ("u" . "f")
-    ("v" . ".")
-    ("w" . ",")
-    ("x" . "b")
-    ("y" . "t")
-    ("z" . "/"))
-  "A alist, each element is of the form(\"e\" . \"d\"). First char is Dvorak, second is corresponding qwerty. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
+;;     ("a" . "a")
+;;     ("b" . "n")
+;;     ("c" . "i")
+;;     ("d" . "h")
+;;     ("e" . "d")
+;;     ("f" . "y")
+;;     ("g" . "u")
+;;     ("h" . "j")
+;;     ("i" . "g")
+;;     ("j" . "c")
+;;     ("k" . "v")
+;;     ("l" . "p")
+;;     ("m" . "m")
+;;     ("n" . "l")
+;;     ("o" . "s")
+;;     ("p" . "r")
+;;     ("q" . "x")
+;;     ("r" . "o")
+;;     ("s" . ";")
+;;     ("t" . "k")
+;;     ("u" . "f")
+;;     ("v" . ".")
+;;     ("w" . ",")
+;;     ("x" . "b")
+;;     ("y" . "t")
+;;     ("z" . "/"))
+;;   "A alist, each element is of the form(\"e\" . \"d\"). First char is Dvorak, second is corresponding qwerty. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
 
-(defvar xah--dvorak-to-qwertz-kmap
-  '(("." . "e")
-    ("," . "w")
-    ("'" . "q")
-    (";" . "y")
-    ("/" . "ü")
-	("[" . "ß")
-    ("]" . "´")
-	("=" . "+")
-    ("-" . "ä")
+;; (defvar xah--dvorak-to-qwertz-kmap
+;;   '(("." . "e")
+;;     ("," . "w")
+;;     ("'" . "q")
+;;     (";" . "y")
+;;     ("/" . "ü")
+;; 	("[" . "ß")
+;;     ("]" . "´")
+;; 	("=" . "+")
+;;     ("-" . "ä")
 
-    ("a" . "a")
-    ("b" . "n")
-    ("c" . "i")
-    ("d" . "h")
-    ("e" . "d")
-    ("f" . "z")
-    ("g" . "u")
-    ("h" . "j")
-    ("i" . "g")
-    ("j" . "c")
-    ("k" . "v")
-    ("l" . "p")
-    ("m" . "m")
-    ("n" . "l")
-    ("o" . "s")
-    ("p" . "r")
-    ("q" . "x")
-    ("r" . "o")
-    ("s" . "ö")
-    ("t" . "k")
-    ("u" . "f")
-    ("v" . ".")
-    ("w" . ",")
-    ("x" . "b")
-    ("y" . "t")
-    ("z" . "-"))
-    "A alist, each element is of the form(\"e\" . \"d\"). First char is Dvorak, second is corresponding qwertz. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
+;;     ("a" . "a")
+;;     ("b" . "n")
+;;     ("c" . "i")
+;;     ("d" . "h")
+;;     ("e" . "d")
+;;     ("f" . "z")
+;;     ("g" . "u")
+;;     ("h" . "j")
+;;     ("i" . "g")
+;;     ("j" . "c")
+;;     ("k" . "v")
+;;     ("l" . "p")
+;;     ("m" . "m")
+;;     ("n" . "l")
+;;     ("o" . "s")
+;;     ("p" . "r")
+;;     ("q" . "x")
+;;     ("r" . "o")
+;;     ("s" . "ö")
+;;     ("t" . "k")
+;;     ("u" . "f")
+;;     ("v" . ".")
+;;     ("w" . ",")
+;;     ("x" . "b")
+;;     ("y" . "t")
+;;     ("z" . "-"))
+;;     "A alist, each element is of the form(\"e\" . \"d\"). First char is Dvorak, second is corresponding qwertz. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
 
-(defvar xah--dvorak-to-workman-kmap
-  '(("'" . "q")
-    ("," . "d")
-    ("." . "r")
-    ("p" . "w")
-    ("y" . "b")
-    ("f" . "j")
-    ("g" . "f")
-    ("c" . "u")
-    ("r" . "p")
-    ("l" . ";")
-    ("a" . "a")
-    ("o" . "s")
-    ("e" . "h")
-    ("u" . "t")
-    ("i" . "g")
-    ("d" . "y")
-    ("h" . "n")
-    ("t" . "e")
-    ("n" . "o")
-    ("s" . "i")
-    (";" . "z")
-    ("q" . "x")
-    ("j" . "m")
-    ("k" . "c")
-    ("x" . "v")
-    ("b" . "k")
-    ("m" . "l")
-    ("w" . ",")
-    ("v" . ".")
-    ("z" . "/"))
-  "A alist, each element is of the form(\"e\" . \"d\"). First char is dvorak, second is corresponding workman. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
+;; (defvar xah--dvorak-to-workman-kmap
+;;   '(("'" . "q")
+;;     ("," . "d")
+;;     ("." . "r")
+;;     ("p" . "w")
+;;     ("y" . "b")
+;;     ("f" . "j")
+;;     ("g" . "f")
+;;     ("c" . "u")
+;;     ("r" . "p")
+;;     ("l" . ";")
+;;     ("a" . "a")
+;;     ("o" . "s")
+;;     ("e" . "h")
+;;     ("u" . "t")
+;;     ("i" . "g")
+;;     ("d" . "y")
+;;     ("h" . "n")
+;;     ("t" . "e")
+;;     ("n" . "o")
+;;     ("s" . "i")
+;;     (";" . "z")
+;;     ("q" . "x")
+;;     ("j" . "m")
+;;     ("k" . "c")
+;;     ("x" . "v")
+;;     ("b" . "k")
+;;     ("m" . "l")
+;;     ("w" . ",")
+;;     ("v" . ".")
+;;     ("z" . "/"))
+;;   "A alist, each element is of the form(\"e\" . \"d\"). First char is dvorak, second is corresponding workman. Not all chars are in the list, such as digits. When not in this alist, they are assumed to be the same.")
 
-(defun xah--dvorak-to-qwertz (@charstr)
-  "Convert dvorak key to qwertz. @charstr is a string of single char.
-For example, \"e\" becomes \"d\".
-If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
-Version 2017-09-13"
-  (interactive)
-  (if (> (length @charstr) 1)
-      @charstr
-    (let (($result (assoc @charstr xah--dvorak-to-qwertz-kmap)))
-      (if $result
-          (cdr $result)
-        @charstr
-        ))))
+;; (defun xah--dvorak-to-qwertz (@charstr)
+;;   "Convert dvorak key to qwertz. @charstr is a string of single char.
+;; For example, \"e\" becomes \"d\".
+;; If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
+;; Version 2017-09-13"
+;;   (interactive)
+;;   (if (> (length @charstr) 1)
+;;       @charstr
+;;     (let (($result (assoc @charstr xah--dvorak-to-qwertz-kmap)))
+;;       (if $result
+;;           (cdr $result)
+;;         @charstr
+;;         ))))
 
-(defun xah--dvorak-to-qwerty (@charstr)
-  "Convert dvorak key to qwerty. @charstr is a string of single char.
-For example, \"e\" becomes \"d\".
-If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
-Version 2017-02-10"
-  (interactive)
-  (if (> (length @charstr) 1)
-      @charstr
-    (let (($result (assoc @charstr xah--dvorak-to-qwerty-kmap)))
-      (if $result
-          (cdr $result)
-        @charstr
-        ))))
+;; (defun xah--dvorak-to-qwerty (@charstr)
+;;   "Convert dvorak key to qwerty. @charstr is a string of single char.
+;; For example, \"e\" becomes \"d\".
+;; If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
+;; Version 2017-02-10"
+;;   (interactive)
+;;   (if (> (length @charstr) 1)
+;;       @charstr
+;;     (let (($result (assoc @charstr xah--dvorak-to-qwerty-kmap)))
+;;       (if $result
+;;           (cdr $result)
+;;         @charstr
+;;         ))))
 
-(defun xah--dvorak-to-workman (@charstr)
-  "Convert dvorak key to workman. @charstr is a string of single char.
-For example, \"e\" becomes \"d\".
-If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
-Version 2017-07-27"
-  (interactive)
-  (if (> (length @charstr) 1)
-      @charstr
-    (let (($result (assoc @charstr xah--dvorak-to-workman-kmap)))
-      (if $result
-          (cdr $result)
-        @charstr
-        ))))
+;; (defun xah--dvorak-to-workman (@charstr)
+;;   "Convert dvorak key to workman. @charstr is a string of single char.
+;; For example, \"e\" becomes \"d\".
+;; If  length of @CHARSTR is greater than 1, such as \"TAB\", @CHARSTR is returned unchanged.
+;; Version 2017-07-27"
+;;   (interactive)
+;;   (if (> (length @charstr) 1)
+;;       @charstr
+;;     (let (($result (assoc @charstr xah--dvorak-to-workman-kmap)))
+;;       (if $result
+;;           (cdr $result)
+;;         @charstr
+;;         ))))
 
-(defun xah-fly--key-char (@charstr)
-  "Return the corresponding char @CHARSTR according to current `xah-fly-key--current-layout'.
-@CHARSTR must be a string of single char. Default layout is dvorak.
-Version 2017-07-27"
-  (interactive)
-  (cond
-   ((string-equal xah-fly-key--current-layout "qwerty") (xah--dvorak-to-qwerty @charstr))
-   ((string-equal xah-fly-key--current-layout "qwertz") (xah--dvorak-to-qwertz @charstr))
-   ((string-equal xah-fly-key--current-layout "workman") (xah--dvorak-to-workman @charstr))
-   (t @charstr)))
+;; (defun xah-fly--key-char (@charstr)
+;;   "Return the corresponding char @CHARSTR according to current `xah-fly-key--current-layout'.
+;; @CHARSTR must be a string of single char. Default layout is dvorak.
+;; Version 2017-07-27"
+;;   (interactive)
+;;   (cond
+;;    ((string-equal xah-fly-key--current-layout "qwerty") (xah--dvorak-to-qwerty @charstr))
+;;    ((string-equal xah-fly-key--current-layout "qwertz") (xah--dvorak-to-qwertz @charstr))
+;;    ((string-equal xah-fly-key--current-layout "workman") (xah--dvorak-to-workman @charstr))
+;;    (t @charstr)))
 
-(defun xah-fly--define-keys (@keymap-name @key-cmd-alist)
-  "Map `define-key' over a alist @key-cmd-alist.
-Example usage:
+;; (defun xah-fly--define-keys (@keymap-name @key-cmd-alist)
+;;   "Map `define-key' over a alist @key-cmd-alist.
+;; Example usage:
+;; ;; (xah-fly--define-keys
+;; ;;  (define-prefix-command 'xah-fly-dot-keymap)
+;; ;;  '(
+;; ;;    (\"h\" . highlight-symbol-at-point)
+;; ;;    (\".\" . isearch-forward-symbol-at-point)
+;; ;;    (\"1\" . hi-lock-find-patterns)
+;; ;;    (\"w\" . isearch-forward-word)))
+;; Version 2017-01-21"
+;;   (interactive)
+;;   (mapc
+;;    (lambda ($pair)
+;;      (define-key @keymap-name (xah-fly--key-char (kbd (car $pair))) (cdr $pair)))
+;;    @key-cmd-alist))
+
+
+;; keymaps
+
+;; (defvar xah-fly-swapped-1-8-and-2-7-p nil "If non-nil, it means keys 1 and 8 are swapped, and 2 and 7 are swapped. See: http://xahlee.info/kbd/best_number_key_layout.html")
+
+;; (defvar xah-fly-key-map (make-sparse-keymap) "Keybinding for `xah-fly-keys' minor mode.")
+
+;; ;; commands in search-map and facemenu-keymap
 ;; (xah-fly--define-keys
 ;;  (define-prefix-command 'xah-fly-dot-keymap)
 ;;  '(
@@ -2628,262 +2652,250 @@ Example usage:
 ;;    (\".\" . isearch-forward-symbol-at-point)
 ;;    (\"1\" . hi-lock-find-patterns)
 ;;    (\"w\" . isearch-forward-word)))
-Version 2017-01-21"
-  (interactive)
-  (mapc
-   (lambda ($pair)
-     (define-key @keymap-name (xah-fly--key-char (kbd (car $pair))) (cdr $pair)))
-   @key-cmd-alist))
+;; Version 2017-01-21"
+;;   (interactive)
+;;   (mapc
+;;    (lambda ($pair)
+;;      (define-key @keymap-name (xah-fly--key-char (kbd (car $pair))) (cdr $pair)))
+;;    @key-cmd-alist))
 
-
-;; keymaps
+;;    ("b" . facemenu-set-bold)
+;;    ("f" . font-lock-fontify-block)
+;;    ("c" . center-line)
+;;    ("d" . facemenu-set-default)
 
-(defvar xah-fly-swapped-1-8-and-2-7-p nil "If non-nil, it means keys 1 and 8 are swapped, and 2 and 7 are swapped. See: http://xahlee.info/kbd/best_number_key_layout.html")
+;;    ("h" . highlight-symbol-at-point)
+;;    ;; temp
+;;    ("." . isearch-forward-symbol-at-point)
+;;    ("1" . hi-lock-find-patterns)
+;;    ("2" . highlight-lines-matching-regexp)
+;;    ("3" . highlight-phrase)
+;;    ("4" . highlight-regexp)
+;;    ("5" . unhighlight-regexp)
+;;    ("6" . hi-lock-write-interactive-patterns)
+;;    ("s" . isearch-forward-symbol)
+;;    ("w" . isearch-forward-word)
 
-(defvar xah-fly-key-map (make-sparse-keymap) "Keybinding for `xah-fly-keys' minor mode.")
+;;    ("i" . facemenu-set-italic)
+;;    ("l" . facemenu-set-bold-italic)
+;;    ("o" . facemenu-set-face)
+;;    ("p" . center-paragraph)
 
-;; commands in search-map and facemenu-keymap
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-dot-keymap)
- '(
+;;    ("u" . facemenu-set-underline)
+;;    ))
 
-   ("b" . facemenu-set-bold)
-   ("f" . font-lock-fontify-block)
-   ("c" . center-line)
-   ("d" . facemenu-set-default)
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly--tab-key-map)
+;;  '(
+;;    ("TAB" . indent-for-tab-command)
 
-   ("h" . highlight-symbol-at-point)
-   ;; temp
-   ("." . isearch-forward-symbol-at-point)
-   ("1" . hi-lock-find-patterns)
-   ("2" . highlight-lines-matching-regexp)
-   ("3" . highlight-phrase)
-   ("4" . highlight-regexp)
-   ("5" . unhighlight-regexp)
-   ("6" . hi-lock-write-interactive-patterns)
-   ("s" . isearch-forward-symbol)
-   ("w" . isearch-forward-word)
+;;    ("i" . complete-symbol)
+;;    ("g" . indent-rigidly)
+;;    ("r" . indent-region)
+;;    ("s" . indent-sexp)
 
-   ("i" . facemenu-set-italic)
-   ("l" . facemenu-set-bold-italic)
-   ("o" . facemenu-set-face)
-   ("p" . center-paragraph)
+;;    ;; temp
+;;    ("1" . abbrev-prefix-mark)
+;;    ("2" . edit-abbrevs)
+;;    ("3" . expand-abbrev)
+;;    ("4" . expand-region-abbrevs)
+;;    ("5" . unexpand-abbrev)
+;;    ("6" . add-global-abbrev)
+;;    ("7" . add-mode-abbrev)
+;;    ("8" . inverse-add-global-abbrev)
+;;    ("9" . inverse-add-mode-abbrev)
+;;    ("0" . expand-jump-to-next-slot)
+;;    ("=" . expand-jump-to-previous-slot)))
 
-   ("u" . facemenu-set-underline)
-   ))
+;; 
 
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly--tab-key-map)
- '(
-   ("TAB" . indent-for-tab-command)
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-c-keymap)
+;;  '(
+;;    ("," . xah-open-in-external-app)
+;;    ("." . find-file)
+;;    ("c" . bookmark-bmenu-list)
+;;    ("e" . ibuffer)
+;;    ("u" . xah-open-file-at-cursor)
+;;    ("h" . recentf-open-files)
+;;    ("l" . bookmark-set)
+;;    ("n" . xah-new-empty-buffer)
+;;    ("o" . xah-show-in-desktop)
+;;    ("p" . xah-open-last-closed)
+;;    ("f" . xah-open-recently-closed)
+;;    ("y" . xah-list-recently-closed)
+;;    ("r" . xah-open-file-fast)
+;;    ("s" . write-file)
+;;    ))
 
-   ("i" . complete-symbol)
-   ("g" . indent-rigidly)
-   ("r" . indent-region)
-   ("s" . indent-sexp)
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-h-keymap)
+;;  '(
+;;    (";" . Info-goto-emacs-command-node)
+;;    ("a" . apropos-command)
+;;    ("b" . describe-bindings)
+;;    ("c" . describe-char)
+;;    ("d" . apropos-documentation)
+;;    ("e" . view-echo-area-messages)
+;;    ("f" . describe-face)
+;;    ("g" . info-lookup-symbol)
+;;    ("h" . describe-function)
+;;    ("i" . info)
+;;    ("j" . man)
+;;    ("k" . describe-key)
+;;    ("K" . Info-goto-emacs-key-command-node)
+;;    ("l" . view-lossage)
+;;    ("m" . xah-describe-major-mode)
+;;    ("n" . describe-variable)
+;;    ("o" . describe-language-environment)
+;;    ("p" . finder-by-keyword)
+;;    ("r" . apropos-variable)
+;;    ("s" . describe-syntax)
+;;    ("u" . elisp-index-search)
+;;    ("v" . apropos-value)
+;;    ("z" . describe-coding-system)))
 
-   ;; temp
-   ("1" . abbrev-prefix-mark)
-   ("2" . edit-abbrevs)
-   ("3" . expand-abbrev)
-   ("4" . expand-region-abbrevs)
-   ("5" . unexpand-abbrev)
-   ("6" . add-global-abbrev)
-   ("7" . add-mode-abbrev)
-   ("8" . inverse-add-global-abbrev)
-   ("9" . inverse-add-mode-abbrev)
-   ("0" . expand-jump-to-next-slot)
-   ("=" . expand-jump-to-previous-slot)))
+;; (xah-fly--define-keys
+;;  ;; commands here are harmless (safe). They don't modify text.
+;;  ;; they turn on minor/major mode, change display, prompt, start shell, etc.
+;;  (define-prefix-command 'xah-fly-n-keymap)
+;;  '(
+;;    ("SPC" . whitespace-mode)
+;;    ("RET" . nil)
+;;    ("TAB" . nil)
+;;    ("DEL" . nil)
+;;    ("," . abbrev-mode)
+;;    ("." . toggle-frame-fullscreen)
+;;    ("'" . frame-configuration-to-register)
+;;    (";" . window-configuration-to-register)
+;;    ("1" . set-input-method)
+;;    ("2" . global-hl-line-mode)
+;;    ("4" . global-display-line-numbers-mode)
+;;    ("5" . visual-line-mode)
+;;    ("6" . calendar)
+;;    ("7" . calc)
+;;    ("8" . nil)
+;;    ("9" . shell-command)
+;;    ("0" . shell-command-on-region)
+;;    ("a" . text-scale-adjust)
+;;    ("b" . toggle-debug-on-error)
+;;    ("c" . toggle-case-fold-search)
+;;    ("d" . narrow-to-page)
+;;    ("e" . eshell)
+;;    ("f" . nil)
+;;    ("g" . nil)
+;;    ("h" . widen)
+;;    ("i" . make-frame-command)
+;;    ("j" . flyspell-buffer)
+;;    ("k" . menu-bar-open)
+;;    ("l" . toggle-word-wrap)
+;;    ("m" . nil)
+;;    ("n" . narrow-to-region)
+;;    ("o" . variable-pitch-mode)
+;;    ("p" . read-only-mode)
+;;    ("q" . nil)
+;;    ("r" . nil)
+;;    ("s" . nil)
+;;    ("t" . narrow-to-defun)
+;;    ("u" . shell)
+;;    ("v" . nil)
+;;    ("w" . eww)
+;;    ("x" . save-some-buffers)
+;;    ("y" . nil)
+;;    ("z" . abort-recursive-edit)))
 
-
+;; (xah-fly--define-keys
+;;  ;; kinda replacement related
+;;  (define-prefix-command 'xah-fly-r-keymap)
+;;  '(
+;;    ("SPC" . rectangle-mark-mode)
+;;    ("," . apply-macro-to-region-lines)
+;;    ("." . kmacro-start-macro)
+;;    ("3" . number-to-register)
+;;    ("4" . increment-register)
+;;    ("a" . xah-upcase-sentence)
+;;    ("c" . replace-rectangle)
+;;    ("d" . delete-rectangle)
+;;    ("e" . call-last-kbd-macro)
+;;    ("g" . kill-rectangle)
+;;    ("l" . clear-rectangle)
+;;    ("i" . xah-space-to-newline)
+;;    ("n" . rectangle-number-lines)
+;;    ("o" . open-rectangle)
+;;    ("p" . kmacro-end-macro)
+;;    ("r" . yank-rectangle)
+;;    ("u" . xah-quote-lines)
+;;    ("y" . delete-whitespace-rectangle)))
 
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-c-keymap)
- '(
-   ("," . xah-open-in-external-app)
-   ("." . find-file)
-   ("c" . bookmark-bmenu-list)
-   ("e" . ibuffer)
-   ("u" . xah-open-file-at-cursor)
-   ("h" . recentf-open-files)
-   ("l" . bookmark-set)
-   ("n" . xah-new-empty-buffer)
-   ("o" . xah-show-in-desktop)
-   ("p" . xah-open-last-closed)
-   ("f" . xah-open-recently-closed)
-   ("y" . xah-list-recently-closed)
-   ("r" . xah-open-file-fast)
-   ("s" . write-file)
-   ))
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-t-keymap)
+;;  '(
+;;    ("SPC" . xah-clean-whitespace)
+;;    ("TAB" . move-to-column)
+;;    ("1" . xah-clear-register-1)
+;;    ("2" . xah-append-to-register-1)
+;;    ("3" . xah-copy-to-register-1)
+;;    ("4" . xah-paste-from-register-1)
+;;    ("." . sort-lines)
+;;    ("," . sort-numeric-fields)
+;;    ("'" . reverse-region)
+;;    ("a" . nil)
+;;    ("b" . nil)
+;;    ("c" . goto-char)
+;;    ("d" . mark-defun)
+;;    ("e" . list-matching-lines)
+;;    ("f" . goto-line )
+;;    ("h" . xah-close-current-buffer )
+;;    ("i" . delete-non-matching-lines)
+;;    ("j" . copy-to-register)
+;;    ("k" . insert-register)
+;;    ("l" . xah-escape-quotes)
+;;    ("m" . xah-make-backup-and-save)
+;;    ("n" . repeat-complex-command)
+;;    ("p" . query-replace-regexp)
+;;    ("r" . copy-rectangle-to-register)
+;;    ("t" . repeat)
+;;    ("u" . delete-matching-lines)
+;;    ("w" . xah-next-window-or-frame)
+;;    ("y" . delete-duplicate-lines)
+;;    ("z" . nil)))
 
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-h-keymap)
- '(
-   (";" . Info-goto-emacs-command-node)
-   ("a" . apropos-command)
-   ("b" . describe-bindings)
-   ("c" . describe-char)
-   ("d" . apropos-documentation)
-   ("e" . view-echo-area-messages)
-   ("f" . describe-face)
-   ("g" . info-lookup-symbol)
-   ("h" . describe-function)
-   ("i" . info)
-   ("j" . man)
-   ("k" . describe-key)
-   ("K" . Info-goto-emacs-key-command-node)
-   ("l" . view-lossage)
-   ("m" . xah-describe-major-mode)
-   ("n" . describe-variable)
-   ("o" . describe-language-environment)
-   ("p" . finder-by-keyword)
-   ("r" . apropos-variable)
-   ("s" . describe-syntax)
-   ("u" . elisp-index-search)
-   ("v" . apropos-value)
-   ("z" . describe-coding-system)))
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-w-keymap)
+;;  '(
+;;    ("DEL" . xah-delete-current-file)
+;;    ("." . eval-buffer)
+;;    ("e" . eval-defun)
+;;    ("m" . eval-last-sexp)
+;;    ("p" . eval-expression)
+;;    ("u" . eval-region)
+;;    ("q" . save-buffers-kill-terminal)
+;;    ("w" . delete-frame)
+;;    ("j" . xah-run-current-file)))
 
-(xah-fly--define-keys
- ;; commands here are harmless (safe). They don't modify text.
- ;; they turn on minor/major mode, change display, prompt, start shell, etc.
- (define-prefix-command 'xah-fly-n-keymap)
- '(
-   ("SPC" . whitespace-mode)
-   ("RET" . nil)
-   ("TAB" . nil)
-   ("DEL" . nil)
-   ("," . abbrev-mode)
-   ("." . toggle-frame-fullscreen)
-   ("'" . frame-configuration-to-register)
-   (";" . window-configuration-to-register)
-   ("1" . set-input-method)
-   ("2" . global-hl-line-mode)
-   ("4" . global-display-line-numbers-mode)
-   ("5" . visual-line-mode)
-   ("6" . calendar)
-   ("7" . calc)
-   ("8" . nil)
-   ("9" . shell-command)
-   ("0" . shell-command-on-region)
-   ("a" . text-scale-adjust)
-   ("b" . toggle-debug-on-error)
-   ("c" . toggle-case-fold-search)
-   ("d" . narrow-to-page)
-   ("e" . eshell)
-   ("f" . nil)
-   ("g" . nil)
-   ("h" . widen)
-   ("i" . make-frame-command)
-   ("j" . flyspell-buffer)
-   ("k" . menu-bar-open)
-   ("l" . toggle-word-wrap)
-   ("m" . nil)
-   ("n" . narrow-to-region)
-   ("o" . variable-pitch-mode)
-   ("p" . read-only-mode)
-   ("q" . nil)
-   ("r" . nil)
-   ("s" . nil)
-   ("t" . narrow-to-defun)
-   ("u" . shell)
-   ("v" . nil)
-   ("w" . eww)
-   ("x" . save-some-buffers)
-   ("y" . nil)
-   ("z" . abort-recursive-edit)))
-
-(xah-fly--define-keys
- ;; kinda replacement related
- (define-prefix-command 'xah-fly-r-keymap)
- '(
-   ("SPC" . rectangle-mark-mode)
-   ("," . apply-macro-to-region-lines)
-   ("." . kmacro-start-macro)
-   ("3" . number-to-register)
-   ("4" . increment-register)
-   ("a" . xah-upcase-sentence)
-   ("c" . replace-rectangle)
-   ("d" . delete-rectangle)
-   ("e" . call-last-kbd-macro)
-   ("g" . kill-rectangle)
-   ("l" . clear-rectangle)
-   ("i" . xah-space-to-newline)
-   ("n" . rectangle-number-lines)
-   ("o" . open-rectangle)
-   ("p" . kmacro-end-macro)
-   ("r" . yank-rectangle)
-   ("u" . xah-quote-lines)
-   ("y" . delete-whitespace-rectangle)))
-
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-t-keymap)
- '(
-   ("SPC" . xah-clean-whitespace)
-   ("TAB" . move-to-column)
-   ("1" . xah-clear-register-1)
-   ("2" . xah-append-to-register-1)
-   ("3" . xah-copy-to-register-1)
-   ("4" . xah-paste-from-register-1)
-   ("." . sort-lines)
-   ("," . sort-numeric-fields)
-   ("'" . reverse-region)
-   ("a" . nil)
-   ("b" . nil)
-   ("c" . goto-char)
-   ("d" . mark-defun)
-   ("e" . list-matching-lines)
-   ("f" . goto-line )
-   ("h" . xah-close-current-buffer )
-   ("i" . delete-non-matching-lines)
-   ("j" . copy-to-register)
-   ("k" . insert-register)
-   ("l" . xah-escape-quotes)
-   ("m" . xah-make-backup-and-save)
-   ("n" . repeat-complex-command)
-   ("p" . query-replace-regexp)
-   ("r" . copy-rectangle-to-register)
-   ("t" . repeat)
-   ("u" . delete-matching-lines)
-   ("w" . xah-next-window-or-frame)
-   ("y" . delete-duplicate-lines)
-   ("z" . nil)))
-
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-w-keymap)
- '(
-   ("DEL" . xah-delete-current-file)
-   ("." . eval-buffer)
-   ("e" . eval-defun)
-   ("m" . eval-last-sexp)
-   ("p" . eval-expression)
-   ("u" . eval-region)
-   ("q" . save-buffers-kill-terminal)
-   ("w" . delete-frame)
-   ("j" . xah-run-current-file)))
-
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-e-keymap)
- '(
-   ("RET" . insert-char)
-   ("SPC" . xah-insert-unicode)
-   ("b" . xah-insert-black-lenticular-bracket【】)
-   ("c" . xah-insert-ascii-single-quote)
-   ("d" . xah-insert-double-curly-quote“”)
-   ("f" . xah-insert-emacs-quote)
-   ("g" . xah-insert-ascii-double-quote)
-   ("h" . xah-insert-brace) ; {}
-   ("i" . xah-insert-curly-single-quote‘’)
-   ("l" . xah-insert-form-feed)
-   ("m" . xah-insert-corner-bracket「」)
-   ("n" . xah-insert-square-bracket) ; []
-   ("p" . xah-insert-single-angle-quote‹›)
-   ("r" . xah-insert-tortoise-shell-bracket〔〕 )
-   ("s" . xah-insert-string-assignment)
-   ("t" . xah-insert-paren)
-   ("u" . xah-insert-date)
-   ("w" . xah-insert-angle-bracket〈〉)
-   ("W" . xah-insert-double-angle-bracket《》)
-   ("y" . xah-insert-double-angle-quote«»)))
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-e-keymap)
+;;  '(
+;;    ("RET" . insert-char)
+;;    ("SPC" . xah-insert-unicode)
+;;    ("b" . xah-insert-black-lenticular-bracket【】)
+;;    ("c" . xah-insert-ascii-single-quote)
+;;    ("d" . xah-insert-double-curly-quote“”)
+;;    ("f" . xah-insert-emacs-quote)
+;;    ("g" . xah-insert-ascii-double-quote)
+;;    ("h" . xah-insert-brace) ; {}
+;;    ("i" . xah-insert-curly-single-quote‘’)
+;;    ("l" . xah-insert-form-feed)
+;;    ("m" . xah-insert-corner-bracket「」)
+;;    ("n" . xah-insert-square-bracket) ; []
+;;    ("p" . xah-insert-single-angle-quote‹›)
+;;    ("r" . xah-insert-tortoise-shell-bracket〔〕 )
+;;    ("s" . xah-insert-string-assignment)
+;;    ("t" . xah-insert-paren)
+;;    ("u" . xah-insert-date)
+;;    ("w" . xah-insert-angle-bracket〈〉)
+;;    ("W" . xah-insert-double-angle-bracket《》)
+;;    ("y" . xah-insert-double-angle-quote«»)))
 
 ;; (xah-fly--define-keys
 ;;  (define-prefix-command 'xah-coding-system-keymap)
@@ -2899,71 +2911,71 @@ Version 2017-01-21"
 ;;    ("t" . set-terminal-coding-system)
 ;;    ("x" . set-selection-coding-system)))
 
-(xah-fly--define-keys
- ;; kinda replacement related
- (define-prefix-command 'xah-fly-comma-keymap)
- '(
-   ("t" . xref-find-definitions)
-   ("n" . xref-pop-marker-stack)))
+;; (xah-fly--define-keys
+;;  ;; kinda replacement related
+;;  (define-prefix-command 'xah-fly-comma-keymap)
+;;  '(
+;;    ("t" . xref-find-definitions)
+;;    ("n" . xref-pop-marker-stack)))
 
-(xah-fly--define-keys
- (define-prefix-command 'xah-fly-leader-key-map)
- '(
-   ("SPC" . xah-fly-insert-mode-activate)
-   ("DEL" . xah-fly-insert-mode-activate)
-   ("RET" . execute-extended-command)
-   ("TAB" . xah-fly--tab-key-map)
+;; (xah-fly--define-keys
+;;  (define-prefix-command 'xah-fly-leader-key-map)
+;;  '(
+;;    ("SPC" . xah-fly-insert-mode-activate)
+;;    ("DEL" . xah-fly-insert-mode-activate)
+;;    ("RET" . execute-extended-command)
+;;    ("TAB" . xah-fly--tab-key-map)
 
-   ("." . xah-fly-dot-keymap)
-   ("'" . xah-fill-or-unfill)
-   ("," . xah-fly-comma-keymap)
-   ("-" . xah-display-form-feed-as-line)
-   ("/" . nil)
-   (";" . nil)
-   ("=" . nil)
-   ("[" . nil)
-   ("\\" . toggle-input-method)
-   ("`" . nil)
+;;    ("." . xah-fly-dot-keymap)
+;;    ("'" . xah-fill-or-unfill)
+;;    ("," . xah-fly-comma-keymap)
+;;    ("-" . xah-display-form-feed-as-line)
+;;    ("/" . nil)
+;;    (";" . nil)
+;;    ("=" . nil)
+;;    ("[" . nil)
+;;    ("\\" . toggle-input-method)
+;;    ("`" . nil)
 
-   ("1" . nil)
-   ("2" . nil)
-   ("3" . delete-window)
-   ("4" . split-window-right)
-   ("5" . balance-windows)
-   ("6" . nil)
-   ("7" . nil)
-   ("8" . nil)
-   ("9" . ispell-word)
-   ("0" . nil)
+;;    ("1" . nil)
+;;    ("2" . nil)
+;;    ("3" . delete-window)
+;;    ("4" . split-window-right)
+;;    ("5" . balance-windows)
+;;    ("6" . nil)
+;;    ("7" . nil)
+;;    ("8" . nil)
+;;    ("9" . ispell-word)
+;;    ("0" . nil)
 
-   ("a" . mark-whole-buffer)
-   ("b" . end-of-buffer)
-   ("c" . xah-fly-c-keymap)
-   ("d" . beginning-of-buffer)
-   ("e" . xah-fly-e-keymap)
-   ("f" . xah-search-current-word)
-   ("g" . isearch-forward)
-   ("h" . xah-fly-h-keymap)
-   ("i" . xah-copy-file-path)
-   ("j" . xah-copy-all-or-region)
-   ("k" . xah-paste-or-paste-previous)
-   ("l" . recenter-top-bottom)
-   ("m" . dired-jump)
-   ("n" . xah-fly-n-keymap)
-   ("o" . exchange-point-and-mark)
-   ("p" . query-replace)
-   ("q" . xah-cut-all-or-region)
-   ("r" . xah-fly-r-keymap)
-   ("s" . save-buffer)
-   ("t" . xah-fly-t-keymap)
-   ("u" . switch-to-buffer)
-   ("v" . nil)
-   ("w" . xah-fly-w-keymap)
-   ("x" . nil)
-   ("y" . xah-show-kill-ring)
-   ("z" . nil)
-   ;;
-   ))
+;;    ("a" . mark-whole-buffer)
+;;    ("b" . end-of-buffer)
+;;    ("c" . xah-fly-c-keymap)
+;;    ("d" . beginning-of-buffer)
+;;    ("e" . xah-fly-e-keymap)
+;;    ("f" . xah-search-current-word)
+;;    ("g" . isearch-forward)
+;;    ("h" . xah-fly-h-keymap)
+;;    ("i" . xah-copy-file-path)
+;;    ("j" . xah-copy-all-or-region)
+;;    ("k" . xah-paste-or-paste-previous)
+;;    ("l" . recenter-top-bottom)
+;;    ("m" . dired-jump)
+;;    ("n" . xah-fly-n-keymap)
+;;    ("o" . exchange-point-and-mark)
+;;    ("p" . query-replace)
+;;    ("q" . xah-cut-all-or-region)
+;;    ("r" . xah-fly-r-keymap)
+;;    ("s" . save-buffer)
+;;    ("t" . xah-fly-t-keymap)
+;;    ("u" . switch-to-buffer)
+;;    ("v" . nil)
+;;    ("w" . xah-fly-w-keymap)
+;;    ("x" . nil)
+;;    ("y" . xah-show-kill-ring)
+;;    ("z" . nil)
+;;    ;;
+;;    ))
 
 
 ;;;; misc
@@ -3104,311 +3116,311 @@ Version 2017-01-21"
 
 ;; setting keys
 
-(progn
+;; (progn
 
-  (progn
-    (define-key xah-fly-key-map (kbd "<home>") 'xah-fly-command-mode-activate)
-    (define-key xah-fly-key-map (kbd "<menu>") 'xah-fly-command-mode-activate)
-    (define-key xah-fly-key-map (kbd "<f8>") 'xah-fly-command-mode-activate-no-hook)
+;;   (progn
+;;     (define-key xah-fly-key-map (kbd "<home>") 'xah-fly-command-mode-activate)
+;;     (define-key xah-fly-key-map (kbd "<menu>") 'xah-fly-command-mode-activate)
+;;     (define-key xah-fly-key-map (kbd "<f8>") 'xah-fly-command-mode-activate-no-hook)
 
-    (define-key xah-fly-key-map (kbd "<f9>") xah-fly-leader-key-map)
+;;     (define-key xah-fly-key-map (kbd "<f9>") xah-fly-leader-key-map)
 
-    (define-key xah-fly-key-map (kbd "<f11>") 'xah-previous-user-buffer)
-    (define-key xah-fly-key-map (kbd "<f12>") 'xah-next-user-buffer)
-    (define-key xah-fly-key-map (kbd "<C-f11>") 'xah-previous-emacs-buffer)
-    (define-key xah-fly-key-map (kbd "<C-f12>") 'xah-next-emacs-buffer))
+;;     (define-key xah-fly-key-map (kbd "<f11>") 'xah-previous-user-buffer)
+;;     (define-key xah-fly-key-map (kbd "<f12>") 'xah-next-user-buffer)
+;;     (define-key xah-fly-key-map (kbd "<C-f11>") 'xah-previous-emacs-buffer)
+;;     (define-key xah-fly-key-map (kbd "<C-f12>") 'xah-next-emacs-buffer))
 
-  (progn
-    ;; set arrow keys in isearch. left/right is backward/forward, up/down is history. press Return to exit
-    (define-key isearch-mode-map (kbd "<up>") 'isearch-ring-retreat )
-    (define-key isearch-mode-map (kbd "<down>") 'isearch-ring-advance )
+;;   (progn
+;;     ;; set arrow keys in isearch. left/right is backward/forward, up/down is history. press Return to exit
+;;     (define-key isearch-mode-map (kbd "<up>") 'isearch-ring-retreat )
+;;     (define-key isearch-mode-map (kbd "<down>") 'isearch-ring-advance )
 
-    (define-key isearch-mode-map (kbd "<left>") 'isearch-repeat-backward)
-    (define-key isearch-mode-map (kbd "<right>") 'isearch-repeat-forward)
+;;     (define-key isearch-mode-map (kbd "<left>") 'isearch-repeat-backward)
+;;     (define-key isearch-mode-map (kbd "<right>") 'isearch-repeat-forward)
 
-    (define-key minibuffer-local-isearch-map (kbd "<left>") 'isearch-reverse-exit-minibuffer)
-    (define-key minibuffer-local-isearch-map (kbd "<right>") 'isearch-forward-exit-minibuffer)
-    ;;
-    )
-  ;;
-  (when xah-fly-use-control-key
-    (progn
-      (define-key xah-fly-key-map (kbd "<C-prior>") 'xah-previous-user-buffer)
-      (define-key xah-fly-key-map (kbd "<C-next>") 'xah-next-user-buffer)
+;;     (define-key minibuffer-local-isearch-map (kbd "<left>") 'isearch-reverse-exit-minibuffer)
+;;     (define-key minibuffer-local-isearch-map (kbd "<right>") 'isearch-forward-exit-minibuffer)
+;;     ;;
+;;     )
+;;   ;;
+;;   (when xah-fly-use-control-key
+;;     (progn
+;;       (define-key xah-fly-key-map (kbd "<C-prior>") 'xah-previous-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-next>") 'xah-next-user-buffer)
 
-      (define-key xah-fly-key-map (kbd "C-2") 'xah-previous-user-buffer)
-      (define-key xah-fly-key-map (kbd "C-1") 'xah-next-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-2") 'xah-previous-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-1") 'xah-next-user-buffer)
 
-      (define-key xah-fly-key-map (kbd "<C-S-prior>") 'xah-previous-emacs-buffer)
-      (define-key xah-fly-key-map (kbd "<C-S-next>") 'xah-next-emacs-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-S-prior>") 'xah-previous-emacs-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-S-next>") 'xah-next-emacs-buffer)
 
-      (define-key xah-fly-key-map (kbd "<C-tab>") 'xah-next-user-buffer)
-      (define-key xah-fly-key-map (kbd "<C-S-tab>") 'xah-previous-user-buffer)
-      (define-key xah-fly-key-map (kbd "<C-S-iso-lefttab>") 'xah-previous-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-tab>") 'xah-next-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-S-tab>") 'xah-previous-user-buffer)
+;;       (define-key xah-fly-key-map (kbd "<C-S-iso-lefttab>") 'xah-previous-user-buffer)
 
-      (define-key xah-fly-key-map (kbd "C-9") 'scroll-down-command)
-      (define-key xah-fly-key-map (kbd "C-0") 'scroll-up-command)
+;;       (define-key xah-fly-key-map (kbd "C-9") 'scroll-down-command)
+;;       (define-key xah-fly-key-map (kbd "C-0") 'scroll-up-command)
 
-      (define-key xah-fly-key-map (kbd "C-SPC") 'xah-fly-leader-key-map)
+;;       (define-key xah-fly-key-map (kbd "C-SPC") 'xah-fly-leader-key-map)
 
-      (define-key xah-fly-key-map (kbd "C-a") 'mark-whole-buffer)
-      (define-key xah-fly-key-map (kbd "C-n") 'xah-new-empty-buffer)
-      (define-key xah-fly-key-map (kbd "C-S-n") 'make-frame-command)
-      (define-key xah-fly-key-map (kbd "C-o") 'find-file)
-      (define-key xah-fly-key-map (kbd "C-s") 'save-buffer)
-      (define-key xah-fly-key-map (kbd "C-S-s") 'write-file)
-      (define-key xah-fly-key-map (kbd "C-S-t") 'xah-open-last-closed)
-      (define-key xah-fly-key-map (kbd "C-v") 'yank)
-      (define-key xah-fly-key-map (kbd "C-w") 'xah-close-current-buffer)
-      (define-key xah-fly-key-map (kbd "C-z") 'undo)
+;;       (define-key xah-fly-key-map (kbd "C-a") 'mark-whole-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-n") 'xah-new-empty-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-S-n") 'make-frame-command)
+;;       (define-key xah-fly-key-map (kbd "C-o") 'find-file)
+;;       (define-key xah-fly-key-map (kbd "C-s") 'save-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-S-s") 'write-file)
+;;       (define-key xah-fly-key-map (kbd "C-S-t") 'xah-open-last-closed)
+;;       (define-key xah-fly-key-map (kbd "C-v") 'yank)
+;;       (define-key xah-fly-key-map (kbd "C-w") 'xah-close-current-buffer)
+;;       (define-key xah-fly-key-map (kbd "C-z") 'undo)
 
-      (define-key xah-fly-key-map (kbd "C-3") 'previous-error)
-      (define-key xah-fly-key-map (kbd "C-4") 'next-error)
+;;       (define-key xah-fly-key-map (kbd "C-3") 'previous-error)
+;;       (define-key xah-fly-key-map (kbd "C-4") 'next-error)
 
-      (define-key xah-fly-key-map (kbd "C-+") 'text-scale-increase)
-      (define-key xah-fly-key-map (kbd "C--") 'text-scale-decrease)
+;;       (define-key xah-fly-key-map (kbd "C-+") 'text-scale-increase)
+;;       (define-key xah-fly-key-map (kbd "C--") 'text-scale-decrease)
 
-      (define-key xah-fly-key-map (kbd "C-t") nil) ; never do transpose-chars
+;;       (define-key xah-fly-key-map (kbd "C-t") nil) ; never do transpose-chars
 
-      ;;
-      ))
+;;       ;;
+;;       ))
 
-  (progn
-    (when xah-fly-use-meta-key
-      (define-key xah-fly-key-map (kbd "M-SPC") 'xah-fly-command-mode-activate-no-hook)))
-  ;;
-  )
+;;   (progn
+;;     (when xah-fly-use-meta-key
+;;       (define-key xah-fly-key-map (kbd "M-SPC") 'xah-fly-command-mode-activate-no-hook)))
+;;   ;;
+;;   )
 
-
+;; 
 
-(defvar xah-fly-insert-state-q t "Boolean value. true means insertion mode is on.")
-(setq xah-fly-insert-state-q t)
+;; (defvar xah-fly-insert-state-q t "Boolean value. true means insertion mode is on.")
+;; (setq xah-fly-insert-state-q t)
 
-(defun xah-fly-keys-set-layout (@layout)
-  "Set a keyboard layout.
-Possible value should be \"qwerty\", \"dvorak\" or \"workman\"
-Version 2017-01-21"
-  (interactive)
-  (setq xah-fly-key--current-layout @layout)
-  (load "xah-fly-keys"))
+;; (defun xah-fly-keys-set-layout (@layout)
+;;   "Set a keyboard layout.
+;; Possible value should be \"qwerty\", \"dvorak\" or \"workman\"
+;; Version 2017-01-21"
+;;   (interactive)
+;;   (setq xah-fly-key--current-layout @layout)
+;;   (load "xah-fly-keys"))
 
-(defun xah-fly-command-mode-init ()
-  "Set command mode keys.
-Version 2017-01-21"
-  (interactive)
-  (xah-fly--define-keys
-   xah-fly-key-map
-   '(
-     ("~" . nil)
-     (":" . nil)
+;; (defun xah-fly-command-mode-init ()
+;;   "Set command mode keys.
+;; Version 2017-01-21"
+;;   (interactive)
+;;   (xah-fly--define-keys
+;;    xah-fly-key-map
+;;    '(
+;;      ("~" . nil)
+;;      (":" . nil)
 
-     ("SPC" . xah-fly-leader-key-map)
-     ("DEL" . xah-fly-leader-key-map)
+;;      ("SPC" . xah-fly-leader-key-map)
+;;      ("DEL" . xah-fly-leader-key-map)
 
-     ("'" . xah-reformat-lines)
-     ("," . xah-shrink-whitespaces)
-     ("-" . xah-cycle-hyphen-underscore-space)
-     ("." . backward-kill-word)
-     (";" . xah-comment-dwim)
-     ("/" . hippie-expand)
-     ("\\" . nil)
-     ("=" . xah-forward-equal-sign)
-     ("[" . xah-backward-punct )
-     ("]" . xah-forward-punct)
-     ("`" . other-frame)
+;;      ("'" . xah-reformat-lines)
+;;      ("," . xah-shrink-whitespaces)
+;;      ("-" . xah-cycle-hyphen-underscore-space)
+;;      ("." . backward-kill-word)
+;;      (";" . xah-comment-dwim)
+;;      ("/" . hippie-expand)
+;;      ("\\" . nil)
+;;      ("=" . xah-forward-equal-sign)
+;;      ("[" . xah-backward-punct )
+;;      ("]" . xah-forward-punct)
+;;      ("`" . other-frame)
 
-     ;; ("#" . xah-backward-quote)
-     ;; ("$" . xah-forward-punct)
+;;      ;; ("#" . xah-backward-quote)
+;;      ;; ("$" . xah-forward-punct)
 
-     ("1" . pop-global-mark)
-     ("2" . xah-pop-local-mark-ring)
-     ("3" . delete-other-windows)
-     ("4" . split-window-below)
-     ("5" . delete-char)
-     ("6" . xah-select-block)
-     ("7" . xah-select-line)
-     ("8" . xah-extend-selection)
-     ("9" . xah-select-text-in-quote)
-     ("0" . nil)
+;;      ("1" . pop-global-mark)
+;;      ("2" . xah-pop-local-mark-ring)
+;;      ("3" . delete-other-windows)
+;;      ("4" . split-window-below)
+;;      ("5" . delete-char)
+;;      ("6" . xah-select-block)
+;;      ("7" . xah-select-line)
+;;      ("8" . xah-extend-selection)
+;;      ("9" . xah-select-text-in-quote)
+;;      ("0" . nil)
 
-     ("a" . execute-extended-command)
-     ("b" . isearch-forward)
-     ("c" . previous-line)
-     ("d" . xah-beginning-of-line-or-block)
-     ("e" . xah-delete-backward-char-or-bracket-text)
-     ("f" . undo)
-     ("g" . backward-word)
-     ("h" . backward-char)
-     ("i" . xah-delete-current-text-block)
-     ("j" . xah-copy-line-or-region)
-     ("k" . xah-paste-or-paste-previous)
-     ("l" . xah-fly-insert-mode-activate-space-before)
-     ("m" . xah-backward-left-bracket)
-     ("n" . forward-char)
-     ("o" . open-line)
-     ("p" . kill-word)
-     ("q" . xah-cut-line-or-region)
-     ("r" . forward-word)
-     ("s" . xah-end-of-line-or-block)
-     ("t" . next-line)
-     ("u" . xah-fly-insert-mode-activate)
-     ("v" . xah-forward-right-bracket)
-     ("w" . xah-next-window-or-frame)
-     ("x" . xah-toggle-letter-case)
-     ("y" . set-mark-command)
-     ("z" . xah-goto-matching-bracket)))
+;;      ("a" . execute-extended-command)
+;;      ("b" . isearch-forward)
+;;      ("c" . previous-line)
+;;      ("d" . xah-beginning-of-line-or-block)
+;;      ("e" . xah-delete-backward-char-or-bracket-text)
+;;      ("f" . undo)
+;;      ("g" . backward-word)
+;;      ("h" . backward-char)
+;;      ("i" . xah-delete-current-text-block)
+;;      ("j" . xah-copy-line-or-region)
+;;      ("k" . xah-paste-or-paste-previous)
+;;      ("l" . xah-fly-insert-mode-activate-space-before)
+;;      ("m" . xah-backward-left-bracket)
+;;      ("n" . forward-char)
+;;      ("o" . open-line)
+;;      ("p" . kill-word)
+;;      ("q" . xah-cut-line-or-region)
+;;      ("r" . forward-word)
+;;      ("s" . xah-end-of-line-or-block)
+;;      ("t" . next-line)
+;;      ("u" . xah-fly-insert-mode-activate)
+;;      ("v" . xah-forward-right-bracket)
+;;      ("w" . xah-next-window-or-frame)
+;;      ("x" . xah-toggle-letter-case)
+;;      ("y" . set-mark-command)
+;;      ("z" . xah-goto-matching-bracket)))
 
-  (define-key xah-fly-key-map (kbd "a") (if (fboundp 'smex) 'smex 'execute-extended-command ))
-  (when xah-fly-swapped-1-8-and-2-7-p
-    (xah-fly--define-keys
-     xah-fly-key-map
-     '(
-       ("8" . pop-global-mark)
-       ("7" . xah-pop-local-mark-ring)
-       ("2" . xah-select-line)
-       ("1" . xah-extend-selection))))
+;;   (define-key xah-fly-key-map (kbd "a") (if (fboundp 'smex) 'smex 'execute-extended-command ))
+;;   (when xah-fly-swapped-1-8-and-2-7-p
+;;     (xah-fly--define-keys
+;;      xah-fly-key-map
+;;      '(
+;;        ("8" . pop-global-mark)
+;;        ("7" . xah-pop-local-mark-ring)
+;;        ("2" . xah-select-line)
+;;        ("1" . xah-extend-selection))))
 
-  (progn
-    (setq xah-fly-insert-state-q nil )
-    (modify-all-frames-parameters (list (cons 'cursor-type 'box))))
+;;   (progn
+;;     (setq xah-fly-insert-state-q nil )
+;;     (modify-all-frames-parameters (list (cons 'cursor-type 'box))))
 
-  (setq mode-line-front-space "C")
-  (force-mode-line-update)
+;;   (setq mode-line-front-space "C")
+;;   (force-mode-line-update)
 
-  ;;
-  )
+;;   ;;
+;;   )
 
-(defun xah-fly-insert-mode-init ()
-  "Set insertion mode keys"
-  (interactive)
-  ;; (setq xah-fly-key-map (make-sparse-keymap))
-  ;; (setq xah-fly-key-map (make-keymap))
+;; (defun xah-fly-insert-mode-init ()
+;;   "Set insertion mode keys"
+;;   (interactive)
+;;   ;; (setq xah-fly-key-map (make-sparse-keymap))
+;;   ;; (setq xah-fly-key-map (make-keymap))
 
-  (xah-fly--define-keys
-   xah-fly-key-map
-   '(
+;;   (xah-fly--define-keys
+;;    xah-fly-key-map
+;;    '(
 
-     ("SPC" . nil)
-     ("DEL" . nil)
+;;      ("SPC" . nil)
+;;      ("DEL" . nil)
 
-     ("'" . nil)
-     ("," . nil)
-     ("-" . nil)
-     ("." . nil)
-     ("/" . nil)
-     (";" . nil)
-     ("=" . nil)
-     ("[" . nil)
-     ("\\" . nil)
-     ("]" . nil)
-     ("`" . nil)
-     ("~" . nil)
+;;      ("'" . nil)
+;;      ("," . nil)
+;;      ("-" . nil)
+;;      ("." . nil)
+;;      ("/" . nil)
+;;      (";" . nil)
+;;      ("=" . nil)
+;;      ("[" . nil)
+;;      ("\\" . nil)
+;;      ("]" . nil)
+;;      ("`" . nil)
+;;      ("~" . nil)
 
-     ;; ("#" . nil)
-     ;; ("$" . nil)
+;;      ;; ("#" . nil)
+;;      ;; ("$" . nil)
 
-     ("1" . nil)
-     ("2" . nil)
-     ("3" . nil)
-     ("4" . nil)
-     ("5" . nil)
-     ("6" . nil)
-     ("7" . nil)
-     ("8" . nil)
-     ("9" . nil)
-     ("0" . nil)
+;;      ("1" . nil)
+;;      ("2" . nil)
+;;      ("3" . nil)
+;;      ("4" . nil)
+;;      ("5" . nil)
+;;      ("6" . nil)
+;;      ("7" . nil)
+;;      ("8" . nil)
+;;      ("9" . nil)
+;;      ("0" . nil)
 
-     ("a" . nil)
-     ("b" . nil)
-     ("c" . nil)
-     ("d" . nil)
-     ("e" . nil)
-     ("f" . nil)
-     ("g" . nil)
-     ("h" . nil)
-     ("i" . nil)
-     ("j" . nil)
-     ("k" . nil)
-     ("l" . nil)
-     ("m" . nil)
-     ("n" . nil)
-     ("o" . nil)
-     ("p" . nil)
-     ("q" . nil)
-     ("r" . nil)
-     ("s" . nil)
-     ("t" . nil)
-     ("u" . nil)
-     ("v" . nil)
-     ("w" . nil)
-     ("x" . nil)
-     ("y" . nil)
-     ("z" . nil)
+;;      ("a" . nil)
+;;      ("b" . nil)
+;;      ("c" . nil)
+;;      ("d" . nil)
+;;      ("e" . nil)
+;;      ("f" . nil)
+;;      ("g" . nil)
+;;      ("h" . nil)
+;;      ("i" . nil)
+;;      ("j" . nil)
+;;      ("k" . nil)
+;;      ("l" . nil)
+;;      ("m" . nil)
+;;      ("n" . nil)
+;;      ("o" . nil)
+;;      ("p" . nil)
+;;      ("q" . nil)
+;;      ("r" . nil)
+;;      ("s" . nil)
+;;      ("t" . nil)
+;;      ("u" . nil)
+;;      ("v" . nil)
+;;      ("w" . nil)
+;;      ("x" . nil)
+;;      ("y" . nil)
+;;      ("z" . nil)
 
-     ;;
-     ))
+;;      ;;
+;;      ))
 
-  (progn
-    (setq xah-fly-insert-state-q t )
-    (modify-all-frames-parameters (list (cons 'cursor-type 'bar))))
+;;   (progn
+;;     (setq xah-fly-insert-state-q t )
+;;     (modify-all-frames-parameters (list (cons 'cursor-type 'bar))))
 
-(setq mode-line-front-space "I")
-(force-mode-line-update)
+;; (setq mode-line-front-space "I")
+;; (force-mode-line-update)
 
-  ;;
-  )
+;;   ;;
+;;   )
 
-(defun xah-fly-mode-toggle ()
-  "Switch between {insertion, command} modes."
-  (interactive)
-  (if xah-fly-insert-state-q
-      (xah-fly-command-mode-activate)
-    (xah-fly-insert-mode-activate)))
+;; (defun xah-fly-mode-toggle ()
+;;   "Switch between {insertion, command} modes."
+;;   (interactive)
+;;   (if xah-fly-insert-state-q
+;;       (xah-fly-command-mode-activate)
+;;     (xah-fly-insert-mode-activate)))
 
-(defun xah-fly-save-buffer-if-file ()
-  "Save current buffer if it is a file."
-  (interactive)
-  (when (buffer-file-name)
-    (save-buffer)))
+;; (defun xah-fly-save-buffer-if-file ()
+;;   "Save current buffer if it is a file."
+;;   (interactive)
+;;   (when (buffer-file-name)
+;;     (save-buffer)))
 
-(defun xah-fly-command-mode-activate ()
-  "Activate command mode and run `xah-fly-command-mode-activate-hook'
-Version 2017-07-07"
-  (interactive)
-  (xah-fly-command-mode-init)
-  (run-hooks 'xah-fly-command-mode-activate-hook))
+;; (defun xah-fly-command-mode-activate ()
+;;   "Activate command mode and run `xah-fly-command-mode-activate-hook'
+;; Version 2017-07-07"
+;;   (interactive)
+;;   (xah-fly-command-mode-init)
+;;   (run-hooks 'xah-fly-command-mode-activate-hook))
 
-(defun xah-fly-command-mode-activate-no-hook ()
-  "Activate command mode. Does not run `xah-fly-command-mode-activate-hook'
-Version 2017-07-07"
-  (interactive)
-  (xah-fly-command-mode-init))
+;; (defun xah-fly-command-mode-activate-no-hook ()
+;;   "Activate command mode. Does not run `xah-fly-command-mode-activate-hook'
+;; Version 2017-07-07"
+;;   (interactive)
+;;   (xah-fly-command-mode-init))
 
-(defun xah-fly-insert-mode-activate ()
-  "Activate insertion mode.
-Version 2017-07-07"
-  (interactive)
-  (xah-fly-insert-mode-init)
-  (run-hooks 'xah-fly-insert-mode-activate-hook))
+;; (defun xah-fly-insert-mode-activate ()
+;;   "Activate insertion mode.
+;; Version 2017-07-07"
+;;   (interactive)
+;;   (xah-fly-insert-mode-init)
+;;   (run-hooks 'xah-fly-insert-mode-activate-hook))
 
-(defun xah-fly-insert-mode-activate-newline ()
-  "Activate insertion mode, insert newline below."
-  (interactive)
-  (xah-fly-insert-mode-activate)
-  (open-line 1))
+;; (defun xah-fly-insert-mode-activate-newline ()
+;;   "Activate insertion mode, insert newline below."
+;;   (interactive)
+;;   (xah-fly-insert-mode-activate)
+;;   (open-line 1))
 
-(defun xah-fly-insert-mode-activate-space-before ()
-  "Insert a space, then activate insertion mode."
-  (interactive)
-  (insert " ")
-  (xah-fly-insert-mode-activate))
+;; (defun xah-fly-insert-mode-activate-space-before ()
+;;   "Insert a space, then activate insertion mode."
+;;   (interactive)
+;;   (insert " ")
+;;   (xah-fly-insert-mode-activate))
 
-(defun xah-fly-insert-mode-activate-space-after ()
-  "Insert a space, then activate insertion mode."
-  (interactive)
-  (insert " ")
-  (xah-fly-insert-mode-activate)
-  (left-char))
+;; (defun xah-fly-insert-mode-activate-space-after ()
+;;   "Insert a space, then activate insertion mode."
+;;   (interactive)
+;;   (insert " ")
+;;   (xah-fly-insert-mode-activate)
+;;   (left-char))
 
 
 
@@ -3421,32 +3433,32 @@ Version 2017-07-07"
 ;; (setq xah-fly-timer-id (run-with-idle-timer 20 t 'xah-fly-command-mode-activate))
 ;; (cancel-timer xah-fly-timer-id)
 
-(define-minor-mode xah-fly-keys
-  "A modal keybinding set, like vim, but based on ergonomic principles, like Dvorak layout.
-URL `http://ergoemacs.org/misc/ergoemacs_vi_mode.html'"
-  t "∑flykeys" xah-fly-key-map
-  (progn
-    ;; when going into minibuffer, switch to insertion mode.
-    (add-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
-    (add-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
-    ;; (add-hook 'xah-fly-command-mode-activate-hook 'xah-fly-save-buffer-if-file)
-    ;; when in shell mode, switch to insertion mode.
-    (add-hook 'shell-mode-hook 'xah-fly-insert-mode-activate))
-  (xah-fly-command-mode-activate)
-  ;; (add-to-list 'emulation-mode-map-alists (list (cons 'xah-fly-keys xah-fly-key-map )))
-  ;; (add-to-list 'emulation-mode-map-alists '((cons xah-fly-keys xah-fly-key-map )))
-)
+;; (define-minor-mode xah-fly-keys
+;;   "A modal keybinding set, like vim, but based on ergonomic principles, like Dvorak layout.
+;; URL `http://ergoemacs.org/misc/ergoemacs_vi_mode.html'"
+;;   t "∑flykeys" xah-fly-key-map
+;;   (progn
+;;     ;; when going into minibuffer, switch to insertion mode.
+;;     (add-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
+;;     (add-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
+;;     ;; (add-hook 'xah-fly-command-mode-activate-hook 'xah-fly-save-buffer-if-file)
+;;     ;; when in shell mode, switch to insertion mode.
+;;     (add-hook 'shell-mode-hook 'xah-fly-insert-mode-activate))
+;;   (xah-fly-command-mode-activate)
+;;   ;; (add-to-list 'emulation-mode-map-alists (list (cons 'xah-fly-keys xah-fly-key-map )))
+;;   ;; (add-to-list 'emulation-mode-map-alists '((cons xah-fly-keys xah-fly-key-map )))
+;; )
 
-(defun xah-fly-keys-off ()
-  "Turn off xah-fly-keys minor mode."
-  (interactive)
-  (progn
-    (remove-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
-    (remove-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
-    (remove-hook 'xah-fly-command-mode-activate-hook 'xah-fly-save-buffer-if-file)
-    (remove-hook 'shell-mode-hook 'xah-fly-insert-mode-activate))
-  (xah-fly-insert-mode-activate)
-  (xah-fly-keys 0))
+;; (defun xah-fly-keys-off ()
+;;   "Turn off xah-fly-keys minor mode."
+;;   (interactive)
+;;   (progn
+;;     (remove-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
+;;     (remove-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
+;;     (remove-hook 'xah-fly-command-mode-activate-hook 'xah-fly-save-buffer-if-file)
+;;     (remove-hook 'shell-mode-hook 'xah-fly-insert-mode-activate))
+;;   (xah-fly-insert-mode-activate)
+;;   (xah-fly-keys 0))
 
 (provide 'xah-fly-keys)
 
